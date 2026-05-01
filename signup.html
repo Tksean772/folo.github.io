@@ -232,5 +232,28 @@
   function oauthNotice() { alert('Google OAuth requires additional setup. See the setup guide.'); }
   document.addEventListener('keydown', e => { if (e.key==='Enter') handleSignup(); });
 </script>
+<script type="module">
+  import { auth } from './firebase-config.js';
+  import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+  const signupForm = document.querySelector('form');
+  
+  signupForm.addEventListener('submit', (e) => {
+    e.preventDefault(); // Stop the page from refreshing
+
+    const email = signupForm.email.value;
+    const password = signupForm.password.value;
+
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        alert("Account Created!");
+        window.location.href = 'dashboard.html'; // Send them to the dashboard
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
+  });
+</script>
+  
 </body>
 </html>
