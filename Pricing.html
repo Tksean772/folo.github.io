@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Folo pricing — simple, honest plans. Free forever for core features. Upgrade when you're ready.">
+<title>Pricing — Folo Finance Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="pricing.css">
+
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="logo">fo<span>lo</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="index.html#features">Features</a></li>
+   
+    <li><a href="pricing.html" style="color:var(--ink);font-weight:500">Pricing</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="faq.html">FAQ</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-cta">
+    <a href="login.html" class="btn-ghost">Log in</a>
+    <a href="signup.html" class="btn-primary">Get started</a>
+  </div>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  
+  <a href="index.html#features">Features</a>
+  <a href="pricing.html">Pricing</a>
+  <a href="about.html">About</a>
+  <a href="faq.html">FAQ</a>
+  <a href="contact.html">Contact</a>
+  <a href="signup.html" class="btn-primary" style="text-align:center;margin-top:0.5rem">Get started</a>
+</div>
+
+<!-- HERO -->
+<div class="pricing-hero">
+  <div class="pricing-eyebrow"> A Plan for everyone</div>
+  <h1>Honest plans,<br><em>zero surprises.</em></h1>
+  <p>Start free and stay free. Upgrade only if you want more power. We'll never sneak a charge or hide a feature behind a paywall you didn't see coming.</p>
+
+  <!-- Billing toggle -->
+  <div class="billing-toggle">
+    <button class="billing-btn active" id="btnMonthly" onclick="setBilling('monthly')">Monthly</button>
+    <button class="billing-btn" id="btnAnnual" onclick="setBilling('annual')">
+     <span class="save-badge"> ANNUAL Save 30% </span>
+    </button>
+  </div>
+</div>
+
+<!-- PLANS -->
+<div class="plans-wrap">
+  <div class="plans-grid">
+
+    <!-- FREE -->
+    <div class="plan-card rise" id="planFree">
+      <div class="plan-icon">🌱</div>
+      <div class="plan-name">Free</div>
+      <div class="plan-price">
+        <span class="plan-currency">K</span>
+        <span class="plan-amount" id="freePrice">0</span>
+      </div>
+      <div class="plan-period">forever free</div>
+      <div class="plan-desc">Everything you need to start taking control of your money. No time limit, no credit card.</div>
+      <a href="signup.html" class="plan-btn plan-btn-outline">Get started free</a>
+      <div class="plan-features">
+        <div class="feat-item"><div class="feat-check">✓</div><span>Up to <strong>3 accounts</strong></span></div>
+        <div class="feat-item"><div class="feat-check">✓</div><span>Unlimited transactions</span></div>
+        <div class="feat-item"><div class="feat-check">✓</div><span>Up to <strong>5 budgets</strong></span></div>
+        <div class="feat-item"><div class="feat-check">✓</div><span>Monthly dashboard & charts</span></div>
+        <div class="feat-item"><div class="feat-check">✓</div><span>CSV data export</span></div>
+        <div class="feat-item"><div class="feat-check">✓</div><span>Mobile-friendly web app</span></div>
+        <div class="feat-item dimmed"><div class="feat-check no">—</div><span>Cross-device sync</span></div>
+        <div class="feat-item dimmed"><div class="feat-check no">—</div><span>Advanced reports</span></div>
+        <div class="feat-item dimmed"><div class="feat-check no">—</div><span>Bank import (CSV)</span></div>
+        <div class="feat-item dimmed"><div class="feat-check no">—</div><span>Priority support</span></div>
+      </div>
+    </div>
+
+    <!-- PLUS (popular) -->
+    <div class="plan-card popular rise rise-2" id="planPlus">
+      <div class="popular-tag">Most popular</div>
+      <div class="plan-icon">⚡</div>
+      <div class="plan-name">Plus</div>
+      <div class="plan-price">
+        <span class="plan-currency">K</span>
+        <span class="plan-amount" id="plusPrice">149</span>
+      </div>
+      <div class="plan-period" id="plusPeriod">per month</div>
+      <div class="plan-desc">For people who are serious about their finances. Sync across devices and unlock the full picture.</div>
+      <a href="signup.html" class="plan-btn plan-btn-accent">Start 14-day free trial</a>
+      <div class="plan-features">
+        <div class="feat-item"><div class="feat-check">✓</div><span>Unlimited accounts</span></div>
+        <div class="feat-item"><div class="feat-check">✓</div><span>Unlimited transactions</span></div>
+        <div class="feat-item"><div class="feat-check">✓</div><span>Unlimited budgets</span></div>
+        <div class="feat-item"><div class="feat-check">✓</div><span>Full dashboard & charts</span></div>
+        <div class="feat-item"><div class="feat-check">✓</div><span>CSV data export</span></div>
+        <div class="feat-item"><div class="feat-check">✓</div><span>Mobile-friendly web app</span></div>
+        <div class="feat-item"><div class="feat-check">✓</div><span><strong>Cross-device sync</strong></span></div>
+        <div class="feat-item"><div class="feat-check">✓</div><span><strong>Advanced reports & trends</strong></span></div>
+        <div class="feat-item"><div class="feat-check">✓</div><span><strong>Bank CSV import</strong></span></div>
+        <div class="feat-item dimmed"><div class="feat-check no">—</div><span>White-label / API access</span></div>
+      </div>
+    </div>
+
+    <!-- PRO -->
+    <div class="plan-card rise rise-3" id="planPro">
+      <div class="plan-icon">🏆</div>
+      <div class="plan-name">Pro</div>
+      <div class="plan-price">
+        <span class="plan-currency">K</span>
+        <span class="plan-amount" id="proPrice">349</span>
+      </div>
+      <div class="plan-period" id="proPeriod">per month</div>
+      <div class="plan-desc">For power users, financial advisors, and families managing multiple financial pictures in one place.</div>
+      <a href="contact.html" class="plan-btn plan-btn-outline">Talk to us</a>
+      <div class="plan-features">
+        <div class="feat-item"><div class="feat-check">✓</div><span>Everything in Plus</span></div>
+        <div class="feat-item"><div class="feat-check">✓</div><span><strong>Up to 5 user profiles</strong></span></div>
+        <div class="feat-item"><div class="feat-check">✓</div><span><strong>Savings goals tracker</strong></span></div>
+        <div class="feat-item"><div class="feat-check">✓</div><span><strong>Recurring transactions</strong></span></div>
+        <div class="feat-item"><div class="feat-check">✓</div><span><strong>Year-over-year reports</strong></span></div>
+        <div class="feat-item"><div class="feat-check">✓</div><span><strong>API access</strong></span></div>
+        <div class="feat-item"><div class="feat-check">✓</div><span><strong>Priority email support</strong></span></div>
+        <div class="feat-item"><div class="feat-check">✓</div><span><strong>Early access to new features</strong></span></div>
+        <div class="feat-item"><div class="feat-check">✓</div><span><strong>Custom budget periods</strong></span></div>
+        <div class="feat-item"><div class="feat-check">✓</div><span><strong>White-label option</strong></span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Trust note -->
+  <p style="text-align:center;font-size:0.8rem;color:var(--muted);margin-top:2rem">
+    🔒 No credit card required for Free. 14-day money-back guarantee on paid plans. Cancel anytime.
+  </p>
+</div>
+
+<!-- COMPARISON TABLE -->
+<div class="compare-section">
+  <div class="compare-title rise">Compare all features</div>
+  <p class="compare-sub rise">Every plan includes core features. Here's the full breakdown.</p>
+  <div style="overflow-x:auto">
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th style="width:45%">Feature</th>
+          <th>Free</th>
+          <th class="popular-col">Plus</th>
+          <th>Pro</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="cat-row"><td colspan="4">Accounts & Transactions</td></tr>
+        <tr><td>Number of accounts</td><td>Up to 3</td><td><strong>Unlimited</strong></td><td><strong>Unlimited</strong></td></tr>
+        <tr><td>Transactions</td><td><span class="check-icon">✓</span> Unlimited</td><td><span class="check-icon">✓</span> Unlimited</td><td><span class="check-icon">✓</span> Unlimited</td></tr>
+        <tr><td>CSV data export</td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td></tr>
+        <tr><td>Bank CSV import</td><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td></tr>
+        <tr><td>Recurring transactions</td><td><span class="cross-icon">✕</span></td><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td></tr>
+
+        <tr class="cat-row"><td colspan="4">Budgets & Goals</td></tr>
+        <tr><td>Number of budgets</td><td>Up to 5</td><td><strong>Unlimited</strong></td><td><strong>Unlimited</strong></td></tr>
+        <tr><td>Custom budget periods</td><td><span class="cross-icon">✕</span></td><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td></tr>
+        <tr><td>Savings goals</td><td><span class="cross-icon">✕</span></td><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td></tr>
+
+        <tr class="cat-row"><td colspan="4">Reports & Analytics</td></tr>
+        <tr><td>Monthly dashboard</td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td></tr>
+        <tr><td>Spending by category</td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td></tr>
+        <tr><td>Advanced trend reports</td><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td></tr>
+        <tr><td>Year-over-year comparison</td><td><span class="cross-icon">✕</span></td><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td></tr>
+
+        <tr class="cat-row"><td colspan="4">Access & Sync</td></tr>
+        <tr><td>Web app (mobile-friendly)</td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td></tr>
+        <tr><td>Cross-device sync</td><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td></tr>
+        <tr><td>User profiles</td><td>1</td><td>1</td><td>Up to 5</td></tr>
+        <tr><td>API access</td><td><span class="cross-icon">✕</span></td><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td></tr>
+
+        <tr class="cat-row"><td colspan="4">Support</td></tr>
+        <tr><td>Community support</td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span></td></tr>
+        <tr><td>Email support</td><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td><td><span class="check-icon">✓</span> Priority</td></tr>
+        <tr><td>Early feature access</td><td><span class="cross-icon">✕</span></td><td><span class="cross-icon">✕</span></td><td><span class="check-icon">✓</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- MINI FAQ -->
+<div class="faq-mini">
+  <div class="faq-mini-title">Pricing questions</div>
+
+  <div class="faq-mini-item">
+    <div class="faq-mini-q" onclick="toggleFaq(this)">
+      Is the free plan really free forever? <div class="faq-mini-toggle">+</div>
+    </div>
+    <div class="faq-mini-a">Yes — no time limit, no credit card, no catch. The Free plan gives you real, useful finance tracking tools that work indefinitely. We may add more features to paid plans over time, but we'll never remove features from Free or move them behind a paywall.</div>
+  </div>
+
+  <div class="faq-mini-item">
+    <div class="faq-mini-q" onclick="toggleFaq(this)">
+      What happens after my 14-day trial? <div class="faq-mini-toggle">+</div>
+    </div>
+    <div class="faq-mini-a">After the trial your Plus or Pro plan continues and you're billed for the first time. If you decide it's not for you, cancel before the trial ends — no charge, no questions asked. Your data is never deleted; you simply drop back to the Free plan limits.</div>
+  </div>
+
+  <div class="faq-mini-item">
+    <div class="faq-mini-q" onclick="toggleFaq(this)">
+      Can I switch plans or cancel anytime? <div class="faq-mini-toggle">+</div>
+    </div>
+    <div class="faq-mini-a">Yes, always. Upgrade or downgrade from your account settings at any time. Cancelling a paid plan takes effect at the end of your current billing period — you keep access until then. If you cancel an annual plan early, we'll refund any unused full months.</div>
+  </div>
+
+  <div class="faq-mini-item">
+    <div class="faq-mini-q" onclick="toggleFaq(this)">
+      What payment methods do you accept? <div class="faq-mini-toggle">+</div>
+    </div>
+    <div class="faq-mini-a">We accept Visa, Mastercard, and Airtel Money / MTN Mobile Money for Zambian users. All payments are processed by a PCI-compliant provider — we never store your card details on our servers.</div>
+  </div>
+
+  <div class="faq-mini-item">
+    <div class="faq-mini-q" onclick="toggleFaq(this)">
+      Are prices in Zambian Kwacha? <div class="faq-mini-toggle">+</div>
+    </div>
+    <div class="faq-mini-a">Yes — prices shown are in ZMW (Zambian Kwacha) by default. International users can select their currency during checkout. Exchange rates are applied at the time of payment using live conversion rates.</div>
+  </div>
+
+  <div class="faq-mini-item">
+    <div class="faq-mini-q" onclick="toggleFaq(this)">
+      Do you offer discounts for students or NGOs? <div class="faq-mini-toggle">+</div>
+    </div>
+    <div class="faq-mini-a">Yes! We offer a 50% discount for verified students and registered non-profit organisations. <a href="contact.html" style="color:var(--accent)">Contact us</a> with proof of eligibility and we'll set you up.</div>
+  </div>
+</div>
+
+<!-- BOTTOM CTA -->
+<div class="pricing-cta">
+  <h2>Start free.<br><em>Upgrade when you're ready.</em></h2>
+  <p>No pressure, no dark patterns. Just a tool that works for you.</p>
+  <div class="pricing-cta-row">
+    <a href="signup.html" class="cta-btn-white">Create free account</a>
+    <a href="contact.html" class="cta-btn-ghost-white">Talk to us first</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <a href="index.html" class="footer-logo">fo<span>lo</span></a>
+  <ul class="footer-links">
+    <li><a href="about.html">About</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
+    <li><a href="faq.html">FAQ</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="#">Privacy</a></li>
+    <li><a href="#">Terms</a></li>
+  </ul>
+  <p class="footer-copy">© 2026 Folo. All rights reserved.</p>
+</footer>
+
+<script>
+  // ── Mobile nav ──────────────────────────────────────────────────────────────
+  function toggleMenu() { document.getElementById('mobileMenu').classList.toggle('open'); }
+
+  // ── Billing toggle ──────────────────────────────────────────────────────────
+  let billing = 'monthly';
+
+  // Prices: [monthly, annual-per-month]
+  const prices = {
+    free:  [0,    0],
+    plus:  [149,  104],
+    pro:   [349,  244],
+  };
+
+  function setBilling(mode) {
+    billing = mode;
+    document.getElementById('btnMonthly').classList.toggle('active', mode === 'monthly');
+    document.getElementById('btnAnnual').classList.toggle('active', mode === 'annual');
+
+    const isAnnual = mode === 'annual';
+
+    // Animate price change
+    ['freePrice', 'plusPrice', 'proPrice'].forEach((id, i) => {
+      const el = document.getElementById(id);
+      el.style.opacity = '0';
+      setTimeout(() => {
+        const keys = ['free','plus','pro'];
+        el.textContent = prices[keys[i]][isAnnual ? 1 : 0].toLocaleString();
+        el.style.opacity = '1';
+        el.style.transition = 'opacity 0.25s';
+      }, 100);
+    });
+
+    document.getElementById('plusPeriod').textContent = isAnnual ? 'per month, billed annually' : 'per month';
+    document.getElementById('proPeriod').textContent  = isAnnual ? 'per month, billed annually' : 'per month';
+  }
+
+  // ── FAQ ─────────────────────────────────────────────────────────────────────
+  function toggleFaq(el) {
+    const item = el.parentElement;
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-mini-item.open').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+  }
+
+  // ── Scroll animations ────────────────────────────────────────────────────────
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.rise').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

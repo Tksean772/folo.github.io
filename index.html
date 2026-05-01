@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Folo — your personal finance tracker. Track spending, set budgets, and grow your wealth with clarity.">
+    <title>Folo — Personal Finance Tracker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+
+    <nav>
+        <a href="index.html" class="logo">Folo</a>
+        <div class="nav-links">
+            <a href="#features">Features</a>
+            <a href="pricing.html">Pricing</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+
+        </div>
+        <div class="nav-cta">
+            <a href="login.html" class="btn-ghost">Log in</a>
+            <a href="signup.html" class="btn-primary">Get started</a>
+        </div>
+        <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#features">Features</a>
+        <a href="#pricing">Pricing</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="signup.html" class="btn-primary">Get started</a>
+    </div>
+
+    <section class="hero">
+        <div class="hero-badge">Your Finances , <em>simplified.</em></div>
+        <h1>Know exactly where <br>your money
+            <br><em>really</em> goes.
+        </h1>
+        <p class="hero-sub">Track your income and expenses, set budgets, and reach your saving goals — all in one place.
+        </p>
+        <div class="hero-actions">
+            <a href="signup.html" class="btn-primary">Create free account</a>
+            <a href="#features" class="btn-ghost">How it works</a>
+        </div>
+        <p class="hero-note">No credit card required</p>
+    </section>
+
+    <section class="preview-wrap">
+        <div class="preview-card">
+
+            <div class="preview-header">
+                <span>My finances</span>
+                <span class="preview-month">April 2026</span>
+            </div>
+
+            <div class="preview-metrics">
+                <div class="metric">
+                    <span class="metric-label">Income</span>
+                    <span class="metric-val income">K10,500</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Expenses</span>
+                    <span class="metric-val expense">K5,000</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Balance Available</span>
+                    <span class="metric-val saved">K5,500</span>
+                </div>
+            </div>
+
+            <ul class="tx-list">
+                <li>
+                    <span class="tx-name">Salary</span>
+                    <span class="tx-cat">Income</span>
+                    <span class="tx-amt income">+K10,500</span>
+                </li>
+                <li>
+                    <span class="tx-name">Rent</span>
+                    <span class="tx-cat">Housing</span>
+                    <span class="tx-amt">−K3,000</span>
+                </li>
+                <li>
+                    <span class="tx-name">Groceries</span>
+                    <span class="tx-cat">Food</span>
+                    <span class="tx-amt">−K1,700</span>
+                </li>
+                <li>
+                    <span class="tx-name">Netflix</span>
+                    <span class="tx-cat">Subscriptions</span>
+                    <span class="tx-amt">−K300</span>
+                </li>
+            </ul>
+
+        </div>
+    </section>
+
+    <section class="features" id="features">
+
+        <div class="features-header">
+            <span class="section-label">What you get</span>
+            <h2>Everything you need,<br>nothing you don't</h2>
+            <p class="section-sub">Built for people who want clarity, not complexity.</p>
+        </div>
+
+        <div class="features-grid">
+
+            <div class="feat-card fade-up">
+                <div class="feat-icon green">📊</div>
+                <h3>Transaction tracking</h3>
+                <p>See your net worth, income, and spending at a glance — updated the moment you log a transaction.</p>
+            </div>
+
+            <div class="feat-card">
+                <div class="feat-icon">🎯</div>
+                <h3>Monthly budgets</h3>
+                <p>Set spending limits per category and get visual alerts before you overspend. Stay in control
+                    effortlessly.</p>
+            </div>
+
+            <div class="feat-card">
+                <div class="feat-icon">📂</div>
+                <h3>Multiple Accounts</h3>
+                <p>Track cash,Mobile accounts, and credit cards in one place. Switch between them instantly.</p>
+            </div>
+
+            <div class="feat-card">
+                <div class="feat-icon">🏆</div>
+                <h3>Savings goals</h3>
+                <p>Create goals and watch your progress grow over time.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="stats">
+        <div class="stats-grid fade-up">
+            <div>
+                <span class="stat-num">K2.4M</span>
+                <div class="stat-desc">tracked by users this month</div>
+            </div>
+            <div>
+                <span class="stat-num">85%</span>
+                <div class="stat-desc">users hit their savings goal</div>
+            </div>
+            <div>
+                <span class="stat-num">5 min</span>
+                <div class="stat-desc">Average setup time</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="section-label" style="color:var(--accent-mid)"> Get started today</div>
+
+
+        <h2>Your finances, finally<br>under<em> your </em>control</h2>
+        <p class="section-sub">Join thousands of people who track smarter with Folo. Free to start, always.</p>
+        <a href="signup.html" class="btn-lg-white">Create your free account →</a>
+    </section>
+
+    <footer>
+        <a href="index.html" class="footer-logo">fo<span>lo</span></a>
+        <ul class="footer-links">
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="folo_privacy_policy.docx">Privacy</a></li>
+            <li><a href="folo_terms_and_conditions.docx">Terms</a></li>
+        </ul>
+        <p class="footer-copy">© 2026 Folo. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            document.getElementById('mobileMenu').classList.toggle('open');
+        }
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((e, i) => {
+                if (e.isIntersecting) {
+                    setTimeout(() => e.target.classList.add('visible'), i * 100);
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    </script>
+
+</body>
+
+</html>

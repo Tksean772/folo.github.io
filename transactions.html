@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transactions - Folo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="transactions.css">
+</head>
+
+<body class="app-page">
+
+  <div class="sidebar-overlay" id="overlay" onclick="closeSidebar()"></div>
+  <aside class="sidebar" id="sidebar">
+    <a href="index.html" class="sidebar-logo">fo<span>lo</span></a>
+    <span class="sidebar-section">Main</span>
+    <ul class="sidebar-nav">
+      <li><a href="dashboard.html"><span class="nav-icon">D</span> Dashboard</a></li>
+      <li><a href="transactions.html"><span class="nav-icon">T</span> Transactions</a></li>
+      <li><a href="budgets.html"><span class="nav-icon">B</span> Budgets</a></li>
+      <li><a href="accounts.html"><span class="nav-icon">A</span> Accounts</a></li>
+    </ul>
+    <div class="sidebar-bottom">
+      <div class="sidebar-user">
+        <div class="user-avatar" id="sidebarAvatar">Y</div>
+        <div>
+          <div class="user-name" id="sidebarName">Your Name</div>
+          <div style="font-size:0.72rem;color:rgba(255,255,255,0.4)">Personal</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <div style="display:flex;align-items:center;gap:1rem;">
+        <button class="hamburger-btn" onclick="openSidebar()"><span></span><span></span><span></span></button>
+        <div class="topbar-title">Transactions</div>
+      </div>
+      <div class="topbar-actions">
+        <button class="btn btn-accent btn-sm" onclick="openModal()">+ Add transaction</button>
+        <button class="btn btn-ghost btn-sm" onclick="logout()">Log out</button>
+      </div>
+    </div>
+
+    <div class="page-content">
+      <div class="summary-row fade-in" id="summaryRow"></div>
+
+      <div class="card fade-in-2">
+        <div class="filter-bar">
+          <div class="search-wrap-app">
+            <span class="search-icon-app">?</span>
+            <input class="form-input" id="searchInput" placeholder="Search transactions..." oninput="renderTable()">
+          </div>
+          <select class="filter-select" id="filterCat" onchange="renderTable()">
+            <option value="">All categories</option>
+          </select>
+          <select class="filter-select" id="filterAcc" onchange="renderTable()">
+            <option value="">All accounts</option>
+          </select>
+          <select class="filter-select" id="filterMonth" onchange="renderTable()">
+            <option value="">All time</option>
+          </select>
+          <div class="type-toggle">
+            <button id="btnAll" onclick="setType('all')" class="active-all">All</button>
+            <button id="btnInc" onclick="setType('income')">Income</button>
+            <button id="btnExp" onclick="setType('expense')">Expenses</button>
+          </div>
+        </div>
+
+        <div style="overflow-x:auto">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Description</th>
+                <th>Date</th>
+                <th>Category</th>
+                <th>Account</th>
+                <th style="text-align:right">Amount</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="txnTableBody"></tbody>
+          </table>
+        </div>
+        <div class="pagination" id="pagination"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="modalBackdrop" onclick="maybeClose(event)">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title" id="modalTitle">Add transaction</div>
+        <button class="modal-close" onclick="closeModal()">x</button>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Description</label>
+        <input class="form-input" id="fDesc" placeholder="e.g. Grocery Store">
+      </div>
+      <div class="form-row-app">
+        <div class="form-group">
+          <label class="form-label">Amount</label>
+          <input class="form-input" id="fAmount" type="number" step="0.01" placeholder="0.00">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Type</label>
+          <select class="form-select" id="fType">
+            <option value="expense">Expense</option>
+            <option value="income">Income</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row-app">
+        <div class="form-group">
+          <label class="form-label">Category</label>
+          <select class="form-select" id="fCat"></select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Account</label>
+          <select class="form-select" id="fAcc"></select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Date</label>
+        <input class="form-input" id="fDate" type="date">
+      </div>
+      <div style="display:flex;gap:0.75rem;margin-top:1.25rem;">
+        <button class="btn btn-ghost" style="flex:1" onclick="closeModal()">Cancel</button>
+        <button class="btn btn-accent" style="flex:2" onclick="saveTransaction()">Save transaction</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const session = JSON.parse(localStorage.getItem('folo_session'));
+    if (!session) window.location.href = 'login.html';
+    window.addEventListener('pageshow', () => {
+      const activeSession = JSON.parse(localStorage.getItem('folo_session') || 'null');
+      if (!activeSession || !activeSession.token) {
+        window.location.replace('login.html');
+      }
+    });
+
+    const CATEGORIES = [
+      'Food', 'Transport', 'Housing', 'Utilities', 'Healthcare', 'Entertainment',
+      'Shopping', 'Education', 'Savings', 'Salary', 'Business', 'Other'
+    ];
+
+    let data = { accounts: [], transactions: [] };
+    let editId = null;
+    let typeFilter = 'all';
+    let currentPage = 1;
+    const PER_PAGE = 12;
+
+    async function readJsonResponse(res) {
+      const raw = await res.text();
+      if (!raw.trim()) return {};
+      try {
+        return JSON.parse(raw);
+      } catch {
+        throw new Error('The server returned an invalid response.');
+      }
+    }
+
+    function fmt(amount) {
+      return new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: session.user.currency || 'USD'
+      }).format(Number(amount) || 0);
+    }
+
+    function fmtDate(date) {
+      return new Date(date).toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric'
+      });
+    }
+
+    function openSidebar() {
+      document.getElementById('sidebar').classList.add('open');
+      document.getElementById('overlay').classList.add('open');
+    }
+
+    function closeSidebar() {
+      document.getElementById('sidebar').classList.remove('open');
+      document.getElementById('overlay').classList.remove('open');
+    }
+
+    function logout() {
+      localStorage.removeItem('folo_session');
+      sessionStorage.clear();
+      window.location.replace('login.html');
+    }
+
+    function setActiveNav() {
+      document.querySelectorAll('.sidebar-nav a').forEach(link => {
+        if (link.getAttribute('href') === 'transactions.html') link.classList.add('active');
+      });
+    }
+
+    function updateSidebar() {
+      document.getElementById('sidebarName').textContent = session.user.name;
+      document.getElementById('sidebarAvatar').textContent = session.user.name.charAt(0).toUpperCase();
+    }
+
+    function populateFilters() {
+      const catSel = document.getElementById('filterCat');
+      const accSel = document.getElementById('filterAcc');
+      const monthSel = document.getElementById('filterMonth');
+      const fCat = document.getElementById('fCat');
+      const fAcc = document.getElementById('fAcc');
+
+      catSel.innerHTML = '<option value="">All categories</option>';
+      fCat.innerHTML = '';
+      CATEGORIES.forEach(category => {
+        catSel.innerHTML += `<option value="${category}">${category}</option>`;
+        fCat.innerHTML += `<option value="${category}">${category}</option>`;
+      });
+
+      accSel.innerHTML = '<option value="">All accounts</option>';
+      fAcc.innerHTML = '';
+      data.accounts.forEach(account => {
+        accSel.innerHTML += `<option value="${account.id}">${account.name}</option>`;
+        fAcc.innerHTML += `<option value="${account.id}">${account.name}</option>`;
+      });
+
+      monthSel.innerHTML = '<option value="">All time</option>';
+      const months = [...new Set(data.transactions.map(t => (t.transaction_date || '').slice(0, 7)).filter(Boolean))]
+        .sort()
+        .reverse();
+
+      months.forEach(month => {
+        const [year, monthNum] = month.split('-');
+        const label = new Date(Number(year), Number(monthNum) - 1, 1).toLocaleDateString('en-US', {
+          month: 'long',
+          year: 'numeric'
+        });
+        monthSel.innerHTML += `<option value="${month}">${label}</option>`;
+      });
+    }
+
+    function setType(type) {
+      typeFilter = type;
+      currentPage = 1;
+      document.getElementById('btnAll').className = type === 'all' ? 'active-all' : '';
+      document.getElementById('btnInc').className = type === 'income' ? 'active-inc' : '';
+      document.getElementById('btnExp').className = type === 'expense' ? 'active-exp' : '';
+      renderTable();
+    }
+
+    function getFiltered() {
+      const search = document.getElementById('searchInput').value.trim().toLowerCase();
+      const cat = document.getElementById('filterCat').value;
+      const acc = document.getElementById('filterAcc').value;
+      const month = document.getElementById('filterMonth').value;
+
+      return data.transactions
+        .filter(t => {
+          const description = (t.description || '').toLowerCase();
+          const category = (t.category || '').toLowerCase();
+
+          if (search && !description.includes(search) && !category.includes(search)) return false;
+          if (cat && t.category !== cat) return false;
+          if (acc && String(t.account_id) !== String(acc)) return false;
+          if (month && !(t.transaction_date || '').startsWith(month)) return false;
+          if (typeFilter === 'income' && t.type !== 'income') return false;
+          if (typeFilter === 'expense' && t.type !== 'expense') return false;
+          return true;
+        })
+        .sort((a, b) => new Date(b.transaction_date) - new Date(a.transaction_date));
+    }
+
+    function renderSummary(filtered) {
+      const income = filtered
+        .filter(t => t.type === 'income')
+        .reduce((sum, t) => sum + Math.abs(Number(t.amount)), 0);
+      const expenses = filtered
+        .filter(t => t.type === 'expense')
+        .reduce((sum, t) => sum + Math.abs(Number(t.amount)), 0);
+      const net = income - expenses;
+
+      document.getElementById('summaryRow').innerHTML = `
+        <div class="summary-pill">${filtered.length} transaction${filtered.length !== 1 ? 's' : ''}</div>
+        <div class="summary-pill">Income: <span style="color:var(--accent);font-weight:500">${fmt(income)}</span></div>
+        <div class="summary-pill">Expenses: <span style="color:var(--danger);font-weight:500">${fmt(expenses)}</span></div>
+        <div class="summary-pill">Net: <span style="color:${net >= 0 ? 'var(--accent)' : 'var(--danger)'};font-weight:500">${fmt(net)}</span></div>
+      `;
+    }
+
+    function renderPagination(total, totalPages) {
+      const start = total === 0 ? 0 : (currentPage - 1) * PER_PAGE + 1;
+      const end = Math.min(currentPage * PER_PAGE, total);
+
+      document.getElementById('pagination').innerHTML = `
+        <span>${start}-${end} of ${total}</span>
+        <div class="pg-btns">
+          <button class="pg-btn" onclick="goPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>&lt;</button>
+          ${Array.from({ length: totalPages }, (_, index) => `<button class="pg-btn${index + 1 === currentPage ? ' current' : ''}" onclick="goPage(${index + 1})">${index + 1}</button>`).join('')}
+          <button class="pg-btn" onclick="goPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>&gt;</button>
+        </div>
+      `;
+    }
+
+    function renderTable() {
+      const filtered = getFiltered();
+      renderSummary(filtered);
+
+      const total = filtered.length;
+      const totalPages = Math.max(1, Math.ceil(total / PER_PAGE));
+      if (currentPage > totalPages) currentPage = totalPages;
+
+      const page = filtered.slice((currentPage - 1) * PER_PAGE, currentPage * PER_PAGE);
+      const tbody = document.getElementById('txnTableBody');
+
+      if (!page.length) {
+        tbody.innerHTML = '<tr><td colspan="6"><div class="empty-state"><p>No transactions found.</p></div></td></tr>';
+        renderPagination(total, totalPages);
+        return;
+      }
+
+      tbody.innerHTML = page.map(t => {
+        const account = data.accounts.find(a => String(a.id) === String(t.account_id));
+        const numericAmount = Math.abs(Number(t.amount));
+        const displayAmount = t.type === 'expense' ? -numericAmount : numericAmount;
+
+        return `
+          <tr>
+            <td style="padding:0.85rem 1rem;font-weight:500">${t.description || ''}</td>
+            <td style="color:var(--muted)">${fmtDate(t.transaction_date)}</td>
+            <td><span class="badge badge-gray">${t.category || 'Uncategorized'}</span></td>
+            <td style="color:var(--muted)">${account ? account.name : '-'}</td>
+            <td style="text-align:right" class="${t.type === 'income' ? 'amount-pos' : 'amount-neg'}">${displayAmount > 0 ? '+' : ''}${fmt(displayAmount)}</td>
+            <td><div class="action-btns"><button class="icon-btn" onclick="openModal('${t.id}')" title="Edit">Edit</button></div></td>
+          </tr>
+        `;
+      }).join('');
+
+      renderPagination(total, totalPages);
+    }
+
+    function goPage(page) {
+      const totalPages = Math.max(1, Math.ceil(getFiltered().length / PER_PAGE));
+      if (page < 1 || page > totalPages) return;
+      currentPage = page;
+      renderTable();
+    }
+
+    function openModal(id = null) {
+      editId = id;
+      document.getElementById('modalTitle').textContent = id ? 'Edit transaction' : 'Add transaction';
+
+      if (id) {
+        const transaction = data.transactions.find(item => String(item.id) === String(id));
+        if (!transaction) return;
+
+        document.getElementById('fDesc').value = transaction.description || '';
+        document.getElementById('fAmount').value = Math.abs(Number(transaction.amount)) || '';
+        document.getElementById('fType').value = transaction.type || 'expense';
+        document.getElementById('fCat').value = transaction.category || CATEGORIES[0];
+        document.getElementById('fAcc').value = transaction.account_id || '';
+        document.getElementById('fDate').value = (transaction.transaction_date || '').slice(0, 10);
+      } else {
+        document.getElementById('fDesc').value = '';
+        document.getElementById('fAmount').value = '';
+        document.getElementById('fType').value = 'expense';
+        document.getElementById('fCat').value = CATEGORIES[0];
+        document.getElementById('fAcc').value = data.accounts[0]?.id || '';
+        document.getElementById('fDate').value = new Date().toISOString().slice(0, 10);
+      }
+
+      document.getElementById('modalBackdrop').classList.add('open');
+    }
+
+    function closeModal() {
+      document.getElementById('modalBackdrop').classList.remove('open');
+      editId = null;
+    }
+
+    function maybeClose(event) {
+      if (event.target.id === 'modalBackdrop') closeModal();
+    }
+
+    async function loadTransactions() {
+      try {
+        const res = await fetch(`api/data/get_data.php?userId=${session.user.id}`);
+        const payload = await readJsonResponse(res);
+
+        if (!res.ok) throw new Error(payload.error || 'Failed to load transactions');
+
+        data.accounts = payload.accounts || [];
+        data.transactions = payload.transactions || [];
+        updateSidebar();
+        populateFilters();
+        renderTable();
+      } catch (error) {
+        console.error('Load failed:', error);
+        alert('Could not load transactions right now.');
+      }
+    }
+
+    async function saveTransaction() {
+      const desc = document.getElementById('fDesc').value.trim();
+      const amount = parseFloat(document.getElementById('fAmount').value);
+      const category = document.getElementById('fCat').value;
+      const accountId = document.getElementById('fAcc').value;
+      const type = document.getElementById('fType').value;
+      const transactionDate = document.getElementById('fDate').value;
+
+      if (!desc || Number.isNaN(amount) || !accountId || !transactionDate) {
+        alert('Fill all fields');
+        return;
+      }
+
+      if (editId) {
+        alert('Editing transactions is not available yet.');
+        return;
+      }
+
+      try {
+        const res = await fetch('api/data/add_transaction.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            userId: session.user.id,
+            accountId,
+            description: desc,
+            amount: type === 'expense' ? -Math.abs(amount) : Math.abs(amount),
+            type,
+            category,
+            transactionDate
+          })
+        });
+
+        const payload = await readJsonResponse(res);
+        if (!res.ok) throw new Error(payload.error || 'Failed to save transaction');
+
+        closeModal();
+        await loadTransactions();
+      } catch (error) {
+        console.error('Save failed:', error);
+        alert(error.message || 'Save failed');
+      }
+    }
+
+    setActiveNav();
+    loadTransactions();
+  </script>
+</body>
+
+</html>

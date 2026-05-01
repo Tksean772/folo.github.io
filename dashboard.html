@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — Folo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+
+<body class="app-page">
+
+  <div class="sidebar-overlay" id="overlay" onclick="closeSidebar()"></div>
+
+  <aside class="sidebar" id="sidebar">
+    <a href="index.html" class="sidebar-logo">fo<span>lo</span></a>
+    <span class="sidebar-section">Main</span>
+    <ul class="sidebar-nav">
+      <li><a href="dashboard.html"><span class="nav-icon">◈</span> Dashboard</a></li>
+      <li><a href="transactions.html"><span class="nav-icon">↕</span> Transactions</a></li>
+      <li><a href="budgets.html"><span class="nav-icon">◻</span> Budgets</a></li>
+      <li><a href="accounts.html"><span class="nav-icon">◎</span> Accounts</a></li>
+    </ul>
+    <div class="sidebar-bottom">
+      <div class="sidebar-user">
+        <div class="user-avatar" id="sidebarAvatar">Y</div>
+        <div>
+          <div class="user-name" id="sidebarName">Your Name</div>
+          <div style="font-size:0.72rem;color:rgba(255,255,255,0.4)">Personal</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <div style="display:flex;align-items:center;gap:1rem;">
+        <button class="hamburger-btn" onclick="openSidebar()"><span></span><span></span><span></span></button>
+        <div class="topbar-title">Dashboard</div>
+      </div>
+      <div class="topbar-actions">
+        <span id="topbarDate" style="font-size:0.8rem;color:var(--muted)"></span>
+        <a href="transactions.html" class="btn btn-accent btn-sm">+ Add transaction</a>
+        <button class="btn btn-ghost btn-sm" onclick="logout()">Log out</button>
+      </div>
+    </div>
+
+    <div class="page-content">
+      <div class="stat-grid fade-in">
+        <div class="stat-card">
+          <div class="stat-label">Net worth</div>
+          <div class="stat-value" id="statNetWorth">—</div>
+          <div class="stat-sub">Across all accounts</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Income this month</div>
+          <div class="stat-value stat-pos" id="statIncome">—</div>
+          <div class="stat-sub" id="statIncomeSub">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Expenses this month</div>
+          <div class="stat-value stat-neg" id="statExpenses">—</div>
+          <div class="stat-sub" id="statExpensesSub">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Savings rate</div>
+          <div class="stat-value" id="statSavings">—</div>
+          <div class="stat-sub">Of income saved</div>
+        </div>
+      </div>
+
+      <div class="grid-2 fade-in-2">
+        <div class="card">
+          <div class="section-header">
+            <div class="section-title">Spending by category</div>
+            <span style="font-size:0.75rem;color:var(--muted)" id="spendMonth"></span>
+          </div>
+          <div class="chart-bar-wrap" id="categoryChart"></div>
+        </div>
+        <div class="card">
+          <div class="section-header">
+            <div class="section-title">Accounts</div>
+            <a href="accounts.html" class="btn btn-ghost btn-sm">Manage</a>
+          </div>
+          <div class="accounts-list" id="accountsList"></div>
+        </div>
+      </div>
+
+      <div class="card fade-in-3">
+        <div class="section-header">
+          <div class="section-title">Recent transactions</div>
+          <a href="transactions.html" class="btn btn-ghost btn-sm">View all</a>
+        </div>
+        <div id="recentTxns"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="dashboard.js"></script>
+
+</body>
+
+</html>

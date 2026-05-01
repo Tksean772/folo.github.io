@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Budgets — Folo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="budgets.css">
+</head>
+
+<body class="app-page">
+
+  <div class="sidebar-overlay" id="overlay" onclick="closeSidebar()"></div>
+  <aside class="sidebar" id="sidebar">
+    <a href="index.html" class="sidebar-logo">fo<span>lo</span></a>
+    <span class="sidebar-section">Main</span>
+    <ul class="sidebar-nav">
+      <li><a href="dashboard.html"><span class="nav-icon">◈</span> Dashboard</a></li>
+      <li><a href="transactions.html"><span class="nav-icon">↕</span> Transactions</a></li>
+      <li><a href="budgets.html"><span class="nav-icon">◻</span> Budgets</a></li>
+      <li><a href="accounts.html"><span class="nav-icon">◎</span> Accounts</a></li>
+    </ul>
+    <div class="sidebar-bottom">
+      <div class="sidebar-user">
+        <div class="user-avatar" id="sidebarAvatar">Y</div>
+        <div>
+          <div class="user-name" id="sidebarName">Your Name</div>
+          <div style="font-size:0.72rem;color:rgba(255,255,255,0.4)">Personal</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <div style="display:flex;align-items:center;gap:1rem;">
+        <button class="hamburger-btn" onclick="openSidebar()"><span></span><span></span><span></span></button>
+        <div class="topbar-title">Budgets</div>
+      </div>
+      <div class="topbar-actions">
+        <span style="font-size:0.8rem;color:var(--muted)" id="budgetMonth"></span>
+        <button class="btn btn-accent btn-sm" onclick="openModal()">+ New budget</button>
+        <button class="btn btn-ghost btn-sm" onclick="logout()">Log out</button>
+      </div>
+    </div>
+
+    <div class="page-content">
+      <div class="summary-strip fade-in" id="summaryStrip"></div>
+      <div class="budgets-grid fade-in-2" id="budgetsGrid"></div>
+    </div>
+  </div>
+
+  <!-- MODAL -->
+  <div class="modal-backdrop" id="modalBackdrop" onclick="maybeClose(event)">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title" id="modalTitle">New budget</div>
+        <button class="modal-close" onclick="closeModal()">✕</button>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Category</label>
+        <select class="form-select" id="fCat"></select>
+      </div>
+      <div class="form-row-app">
+        <div class="form-group">
+          <label class="form-label">Monthly limit</label>
+          <input class="form-input" id="fLimit" type="number" step="1" min="1" placeholder="0">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Period</label>
+          <select class="form-select" id="fPeriod">
+            <option value="monthly">Monthly</option>
+          </select>
+        </div>
+      </div>
+      <div style="display:flex;gap:0.75rem;margin-top:1.25rem;">
+        <button class="btn btn-ghost" style="flex:1" onclick="closeModal()">Cancel</button>
+        <button class="btn btn-accent" style="flex:2" onclick="saveBudget()">Save budget</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="budgets.js"></script>
+ 
+</body>
+
+</html>

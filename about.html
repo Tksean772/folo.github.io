@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="About Folo — built by someone who got tired of spreadsheets and bank apps that never talk to each other.">
+    <title>About — Folo Finance Tracker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="about.css">
+</head>
+
+<body>
+
+    <nav>
+        <a href="index.html" class="logo">fo<span>lo</span></a>
+        <ul class="nav-links">
+            <li><a href="index.html#features">Features</a></li>
+            <li><a href="about.html" class="active">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <div class="nav-cta">
+            <a href="login.html" class="btn-ghost">Log in</a>
+            <a href="signup.html" class="btn-primary">Get started</a>
+        </div>
+        <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+
+    </nav>
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html#features">Features</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="signup.html" class="btn-primary">Get started</a>
+    </div>
+
+    <div class="page-header">
+        <div class="eyebrow">Our story</div>
+        <h1>Built because<br><em>spreadsheets are terrible and complicated</em></h1>
+        <p class="lead">Folo started as a side project by a student who had 11 tabs open trying to figure out where
+            their pocket money went.There had to be a better way.</p>
+    </div>
+
+    <div class="story">
+        <div class="story-block">
+            <h2>The problem we kept running into:</h2>
+            <p>Most finance apps are either too simple (a notes app with totals) or too complex (built for
+                accountants,
+                not regular people). We wanted something that felt like talking to a smart friend who happens to know a
+                lot
+                about money - clear, honest, and not overwhelming.</p>
+            <h2>The solution:</h2>
+            <p>we built Folo: a personal finance tracker that respects your time, protects your data, and
+                actually
+                helps you understand your financial picture.</p>
+        </div>
+        <div class="story-block">
+            <h2>What we believe about money</h2>
+            <p>Financial clarity shouldn't be a privilege. Whether you're managing K500 a month or K20,000, you
+                deserve
+                to know where your money goes and have a plan for where it should go next.</p>
+            <p>Folo is designed for everyday people — not just high earners or finance enthusiasts. We
+                keep it simple, honest, and genuinely useful.</p>
+        </div>
+        <div class="story-block">
+            <h2>Where we're headed</h2>
+            <p>We're a small team with a clear mission: help people feel in control of their money.
+                We're
+                building Folo one thoughtful feature at a time — starting with the things that actually move the
+                needle.
+            </p>
+            <p>No bloat. No dark patterns. No selling your data. Just a tool that works for you.</p>
+        </div>
+    </div>
+
+    <section class="values-section">
+        <div class="values-inner">
+            <span class="section-label">What guides us</span>
+            <h2 class="centered">Our principles</h2>
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-num">01</div>
+                    <h3>Clarity over clutter</h3>
+                    <p>Every screen, every feature, every word is chosen to make your financial picture clearer —
+                        not to
+                        impress you with complexity.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-num">02</div>
+                    <h3>Your data belongs to you</h3>
+                    <p>We never sell, share, or monetize your financial data.You can export or delete
+                        everything, anytime.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-num">03</div>
+                    <h3>Honest by design</h3>
+                    <p>No dark patterns, no hidden fees, no nudging you toward premium features you don't need. What
+                        you
+                        see is what you get.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-num">04</div>
+                    <h3>Built to last</h3>
+                    <p>We're not chasing growth metrics. We're building something sustainable — a tool people can
+                        rely
+                        on for decades, not months.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="security">
+        <div class="security-card">
+            <div class="eyebrow">Security & privacy</div>
+            <h2>Your money data is safe with us</h2>
+            <p>We know that financial information is deeply personal. We've built Folo from the ground up with
+                security
+                and privacy as non-negotiable foundations — not afterthoughts.</p>
+            <div class="security-items">
+                <div class="security-item">
+                    <div class="check"></div><span>All data encrypted at rest and in transit using AES-256 and TLS
+                        1.3</span>
+                </div>
+                <div class="security-item">
+                    <div class="check"></div><span>We never sell, rent, or share your personal or financial data
+                        with
+                        third parties</span>
+                </div>
+                <div class="security-item">
+                    <div class="check"></div><span>Two-factor authentication available on all accounts</span>
+                </div>
+                <div class="security-item">
+                    <div class="check"></div><span>Full data export and permanent account deletion available at any
+                        time</span>
+                </div>
+                <div class="security-item">
+                    <div class="check"></div><span>Regular independent security audits and penetration
+                        testing</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="team-section">
+        <div class="team-inner">
+            <span class="section-label">The people</span>
+            <h2 class="centered" style="text-align:left">Who builds Folo</h2>
+            <div class="team-grid">
+                <div class="team-card">
+                    <div class="avatar" style="background: #588973;">TK</div>
+                    <div class="team-name">Takudzwa Ngaru</div>
+                    <div class="team-role">Founder & Product</div>
+                    <a href="https://github.com/takudzwa" class="team-social">GitHub →</a>
+                </div>
+                <div class="team-card">
+                    <div class="avatar" style="background: #3a5a8c;">KO</div>
+                    <div class="team-name">Kwame Osei</div>
+                    <div class="team-role">Lead Engineer</div>
+                    <a href="#" class="team-social">LinkedIn →</a>
+                </div>
+                <div class="team-card">
+                    <div class="avatar" style="background: #7b4f9e;">SN</div>
+                    <div class="team-name">Sara Njoku</div>
+                    <div class="team-role">Design</div>
+                    <a href="#" class="team-social">LinkedIn →</a>
+                </div>
+                <div class="team-card">
+                    <div class="avatar" style="background: #940c77;">MH</div>
+                    <div class="team-name">Muntinta Hamuwele</div>
+                    <div class="team-role">Accountant</div>
+                    <a href="#" class="team-social">LinkedIn →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="about-cta">
+        <h2>Ready to take control of your finances?</h2>
+        <p>It takes about 5 minutes to set up. No credit card needed.</p>
+        <div class="cta-row">
+            <a href="signup.html" class="btn-lg">Get started free</a>
+            <a href="contact.html" class="btn-lg-ghost">Get in touch</a>
+        </div>
+    </div>
+
+    <footer>
+        <a href="index.html" class="footer-logo">fo<span>lo</span></a>
+        <ul class="footer-links">
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="folo_privacy_policy.docx">Privacy</a></li>
+            <li><a href="folo_terms_and_conditions.docx">Terms</a></li>
+        </ul>
+        <p class="footer-copy">© 2026 Folo. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function toggleMenu() { document.getElementById('mobileMenu').classList.toggle('open'); }
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((e, i) => {
+                if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 80); }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.story-block, .value-card, .team-card').forEach(el => observer.observe(el));
+    </script>
+</body>
+
+</html>

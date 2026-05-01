@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Contact Folo — we're here to help. Send us a message and we'll get back to you within 24 hours.">
+    <title>Contact — Folo Finance Tracker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="contact.css">
+</head>
+
+<body>
+
+    <nav>
+        <a href="index.html" class="logo">fo<span>lo</span></a>
+        <ul class="nav-links">
+            <li><a href="index.html#features">Features</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html" class="active">Contact</a></li>
+        </ul>
+        <div class="nav-cta">
+            <a href="login.html" class="btn-ghost">Log in</a>
+            <a href="signup.html" class="btn-primary">Get started</a>
+        </div>
+        <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html#features">Features</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="signup.html" class="btn-primary">Get started</a>
+    </div>
+
+    <div class="contact-wrap">
+        <div class="contact-left">
+            <div class="eyebrow">Get in touch</div>
+            <h1>We'd love to <em>hear from you</em></h1>
+            <p class="contact-desc">Whether you have a question, found a bug, or just want to share feedback — we read
+                every message and reply to each one personally.</p>
+
+            <div class="contact-info">
+                <div class="info-item">
+                    <div class="info-icon">✉</div>
+                    <div>
+                        <div class="info-label">Email</div>
+                        <div class="info-value"><a href="mailto:folo.tracker@gmail.com">folo.tracker@gmail.com</a></div>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">🕐</div>
+                    <div>
+                        <div class="info-label">Response time</div>
+                        <div class="info-value">Usually within 24 hours on weekdays</div>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">📖</div>
+                    <div>
+                        <div class="info-label">Help & docs</div>
+                        <div class="info-value"><a href="faq.html">Browse our FAQ →</a></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="response-note">
+                <strong>For bug reports</strong>, please include what you were doing when the issue occurred, your
+                browser, and any error messages you saw. It helps us fix things faster.
+            </div>
+        </div>
+        <form action="submit_contact_form.php" method="post" onsubmit="handleSubmit(); return false;">
+            <div class="form-card">
+                <div id="formWrap">
+                    <div class="form-row">
+                        <div class="field">
+                            <label for="fname">First name</label>
+                            <input type="text" id="fname" placeholder="Amara" autocomplete="given-name">
+                            <div class="field-error" id="fname-err">Please enter your first name.</div>
+                        </div>
+                        <div class="field">
+                            <label for="lname">Last name</label>
+                            <input type="text" id="lname" placeholder="Mensah" autocomplete="family-name">
+                            <div class="field-error" id="lname-err">Please enter your last name.</div>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="email">Email address</label>
+                        <input type="email" id="email" placeholder="you@example.com" autocomplete="email">
+                        <div class="field-error" id="email-err">Please enter a valid email address.</div>
+                    </div>
+
+                    <div class="field">
+                        <label for="topic">Topic</label>
+                        <select id="topic">
+                            <option value="">Select a topic...</option>
+                            <option value="general">General question</option>
+                            <option value="bug">Bug report</option>
+                            <option value="feature">Feature request</option>
+                            <option value="billing">Billing</option>
+                            <option value="security">Security concern</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <div class="field-error" id="topic-err">Please select a topic.</div>
+                    </div>
+
+                    <div class="field">
+                        <label for="message">Message</label>
+                        <textarea id="message" placeholder="Tell us what's on your mind..."></textarea>
+                        <div class="field-error" id="message-err">Please write a message (at least 20 characters).</div>
+                    </div>
+
+                    <div class="captcha-wrap">
+                        <div class="captcha-left">
+                            <div class="captcha-box" id="captchaBox" onclick="toggleCaptcha()"></div>
+                            <span class="captcha-label">I'm not a robot</span>
+                        </div>
+                        <div class="captcha-badge">reCAPTCHA<br>Privacy · Terms</div>
+                    </div>
+
+                    <div class="field-error show" id="captcha-err" style="margin-bottom:0.75rem; display:none;">Please
+                        confirm you're not a robot.</div>
+
+                    <button class="submit-btn" id="submitBtn" type="button" onclick="handleSubmit()">
+                        <span id="btnText">Send message</span>
+                        <div class="spinner" id="spinner"></div>
+                    </button>
+
+                    <div class="feedback-msg" id="feedbackMsg">
+                        <span class="feedback-icon" id="feedbackIcon"></span>
+                        <span id="feedbackText"></span>
+                    </div>
+                </div>
+
+                <div class="success-screen" id="successScreen">
+                    <div class="success-circle">✓</div>
+                    <h2>Message sent!</h2>
+                    <p>Thanks for reaching out. We'll get back to you at <strong id="confirmEmail"></strong> within 24
+                        hours.</p>
+                    <br>
+                    <button class="submit-btn" type="button" style="max-width:200px;margin:1rem auto 0" onclick="resetForm()">Send
+                        another</button>
+                </div>
+            </div>
+    </div>
+    </form>
+    <div class="faq-section">
+        <span class="faq-label">Common questions</span>
+        <div class="faq-item">
+            <div class="faq-q" onclick="toggleFaq(this)">Is Folo really free to use? <div class="faq-toggle">+</div>
+            </div>
+            <div class="faq-a">Yes — Folo's core features are free. We may offer optional paid features in the future,
+                but we'll always maintain a solid free tier and never surprise you with paywalls.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q" onclick="toggleFaq(this)">Can I export my data? <div class="faq-toggle">+</div>
+            </div>
+            <div class="faq-a">Absolutely. You can export all your transactions and account data as CSV at any time from
+                your account settings. Your data is always yours.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q" onclick="toggleFaq(this)">How do I report a bug? <div class="faq-toggle">+</div>
+            </div>
+            <div class="faq-a">Use the form above and select "Bug report" as the topic. Include what you were doing,
+                which browser you were using, and any error messages. We take bugs seriously and try to fix them fast.
+            </div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q" onclick="toggleFaq(this)">How do I delete my account? <div class="faq-toggle">+</div>
+            </div>
+            <div class="faq-a">You can permanently delete your account and all associated data from Settings → Account →
+                Delete account. The deletion is immediate and irreversible. We'll send a confirmation to your email.
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <a href="index.html" class="footer-logo">fo<span>lo</span></a>
+        <ul class="footer-links">
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="folo_privacy_policy.docx">Privacy</a></li>
+            <li><a href="folo_terms_and_conditions.docx">Terms</a></li>
+        </ul>
+        <p class="footer-copy">© 2026 Folo. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function toggleMenu() { document.getElementById('mobileMenu').classList.toggle('open'); }
+
+        let captchaChecked = false;
+        function toggleCaptcha() {
+            captchaChecked = !captchaChecked;
+            document.getElementById('captchaBox').classList.toggle('checked', captchaChecked);
+            if (captchaChecked) document.getElementById('captcha-err').style.display = 'none';
+        }
+
+        function validate() {
+            let ok = true;
+            const fields = [
+                { id: 'fname', errId: 'fname-err', check: v => v.trim().length > 0 },
+                { id: 'lname', errId: 'lname-err', check: v => v.trim().length > 0 },
+                { id: 'email', errId: 'email-err', check: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
+                { id: 'topic', errId: 'topic-err', check: v => v !== '' },
+                { id: 'message', errId: 'message-err', check: v => v.trim().length >= 10 },
+            ];
+            fields.forEach(f => {
+                const el = document.getElementById(f.id);
+                const err = document.getElementById(f.errId);
+                if (!f.check(el.value)) {
+                    el.classList.add('error'); err.classList.add('show'); ok = false;
+                } else {
+                    el.classList.remove('error'); err.classList.remove('show');
+                }
+            });
+            if (!captchaChecked) {
+                document.getElementById('captcha-err').style.display = 'block'; ok = false;
+            }
+            return ok;
+        }
+
+        ['fname', 'lname', 'email', 'topic', 'message'].forEach(id => {
+            document.getElementById(id).addEventListener('input', function () {
+                this.classList.remove('error');
+                document.getElementById(id + '-err').classList.remove('show');
+            });
+        });
+
+        async function handleSubmit() {
+    if (!validate()) return;
+    
+    const btn = document.getElementById('submitBtn');
+    const spinner = document.getElementById('spinner');
+    const btnText = document.getElementById('btnText');
+    
+    btn.disabled = true;
+    btnText.textContent = 'Sending...';
+    spinner.style.display = 'block';
+
+    // Prepare data
+    const formData = new FormData();
+    formData.append('fname', document.getElementById('fname').value);
+    formData.append('lname', document.getElementById('lname').value);
+    formData.append('email', document.getElementById('email').value);
+    formData.append('topic', document.getElementById('topic').value);
+    formData.append('message', document.getElementById('message').value);
+
+    try {
+        const response = await fetch('submit_contact_form.php', {
+            method: 'POST',
+            body: formData
+        });
+        
+        const result = await response.json();
+
+        if (result.status === 'success') {
+            document.getElementById('confirmEmail').textContent = document.getElementById('email').value;
+            document.getElementById('formWrap').style.display = 'none';
+            document.getElementById('successScreen').classList.add('show');
+        } else {
+            alert("Error sending message: " + result.message);
+        }
+    } catch (err) {
+        alert("Connection error. Please try again.");
+    } finally {
+        spinner.style.display = 'none';
+        btn.disabled = false;
+        btnText.textContent = 'Send message';
+    }
+}
+        function resetForm() {
+            ['fname', 'lname', 'email', 'message'].forEach(id => document.getElementById(id).value = '');
+            document.getElementById('topic').value = '';
+            captchaChecked = false;
+            document.getElementById('captchaBox').classList.remove('checked');
+            document.getElementById('formWrap').style.display = 'block';
+            document.getElementById('successScreen').classList.remove('show');
+        }
+
+        function toggleFaq(el) {
+            const item = el.parentElement;
+            const wasOpen = item.classList.contains('open');
+            document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+            if (!wasOpen) item.classList.add('open');
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Folo FAQ — answers to common questions about using the personal finance tracker, your data, privacy, billing, and more.">
+    <title>FAQ — Folo Finance Tracker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="faq.css">
+</head>
+
+<body>
+
+    <nav>
+        <a href="index.html" class="logo">fo<span>lo</span></a>
+        <ul class="nav-links">
+            <li><a href="index.html#features">Features</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="faq.html" class="active">FAQ</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <div class="nav-cta">
+            <a href="login.html" class="btn-ghost">Log in</a>
+            <a href="signup.html" class="btn-primary">Get started</a>
+        </div>
+        <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html#features">Features</a>
+        <a href="about.html">About</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a>
+        <a href="signup.html" class="btn-primary mobile-menu-cta">Get started</a>
+    </div>
+
+    <div class="page-hero fade-up">
+        <div class="eyebrow">Help centre</div>
+        <h1>Questions? We have<br><em>all the answers</em></h1>
+        <p class="hero-desc">Everything you need to know about Folo — from getting started to data privacy, billing, and
+            beyond.</p>
+    </div>
+
+    <div class="search-wrap fade-up faq-search-delay">
+        <span class="search-icon">🔍</span>
+        <input class="search-input" id="searchInput" type="text" placeholder="Search questions…" oninput="filterFAQ()"
+            autocomplete="off">
+    </div>
+
+    <div class="faq-layout">
+
+        <nav class="category-nav" aria-label="FAQ categories">
+            <div class="cat-nav-label">Categories</div>
+            <ul class="cat-nav-list" id="catNavList">
+                <li><a href="#getting-started" class="active" data-cat="getting-started"><span
+                            class="cat-icon">🚀</span> Getting started <span class="cat-count">6</span></a></li>
+                <li><a href="#accounts" data-cat="accounts"><span class="cat-icon">🏦</span> Accounts <span
+                            class="cat-count">5</span></a></li>
+                <li><a href="#transactions" data-cat="transactions"><span class="cat-icon">↕</span> Transactions <span
+                            class="cat-count">6</span></a></li>
+                <li><a href="#budgets" data-cat="budgets"><span class="cat-icon">◻</span> Budgets <span
+                            class="cat-count">5</span></a></li>
+                <li><a href="#data-privacy" data-cat="data-privacy"><span class="cat-icon">🔒</span> Data & privacy
+                        <span class="cat-count">7</span></a></li>
+                <li><a href="#billing" data-cat="billing"><span class="cat-icon">💳</span> Billing <span
+                            class="cat-count">5</span></a></li>
+                <li><a href="#technical" data-cat="technical"><span class="cat-icon">⚙</span> Technical <span
+                            class="cat-count">5</span></a></li>
+            </ul>
+        </nav>
+
+        <div id="faqContent">
+
+            <section class="faq-section" id="getting-started" data-cat="getting-started">
+                <div class="faq-section-header">
+                    <div class="section-icon">🚀</div>
+                    <div class="section-title">Getting started</div>
+                    <span class="section-count">6 questions</span>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggle(this)">
+                        <span class="faq-q-text">What is Folo and who is it for?</span>
+                        <div class="faq-toggle">+</div>
+                    </div>
+                    <div class="faq-a">
+                        <div class="faq-a-inner">
+                            <p>Folo is a personal finance tracker designed to give you a clear, honest picture of your
+                                money — without the complexity of professional accounting software or the limitations of
+                                a basic spreadsheet.</p>
+                            <p>It's for anyone who wants to:</p>
+                            <ul>
+                                <li>Know where their money goes each month</li>
+                                <li>Set and stick to budgets across spending categories</li>
+                                <li>Track balances across multiple accounts in one place</li>
+                                <li>Build healthy financial habits over time</li>
+                            </ul>
+                            <p>You don't need to be a finance expert. If you can log a transaction and set a monthly
+                                limit, you're already using Folo the right way.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggle(this)">
+                        <span class="faq-q-text">How do I get started? Does it take long?</span>
+                        <div class="faq-toggle">+</div>
+                    </div>
+                    <div class="faq-a">
+                        <div class="faq-a-inner">
+                            <p>Setup takes about 5 minutes. Here's the recommended order:</p>
+                            <ul>
+                                <li><strong>Step 1 — Add your accounts.</strong> Go to the Accounts page and add each
+                                    financial account you want to track: your bank account, savings, credit card, cash,
+                                    etc. Enter the current balance for each.</li>
+                                <li><strong>Step 2 — Create your budgets.</strong> On the Budgets page, set a monthly
+                                    spending limit for each category that matters to you (Food, Bills, Transport, etc.).
+                                </li>
+                                <li><strong>Step 3 — Start logging transactions.</strong> Add your income and expenses
+                                    as they happen, or backfill the current month to get a complete picture immediately.
+                                </li>
+                            </ul>
+                            <div class="tip"><span class="tip-icon">💡</span>
+                                <p><strong>Tip:</strong> Don't try to enter years of history on day one. Start with this
+                                    month and build the habit. Historical data is most useful once you've been tracking
+                                    for a few months.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggle(this)">
+                        <span class="faq-q-text">Is Folo free to use?</span>
+                        <div class="faq-toggle">+</div>
+                    </div>
+                    <div class="faq-a">
+                        <div class="faq-a-inner">
+                            <p>Yes — Folo's core features are completely free. The free plan gives you access to:</p>
+                            <ul>
+                                <li>Unlimited manual transactions</li>
+                                <li>Up to 10 accounts</li>
+                                <li>Full budgeting features</li>
+                                <li>Dashboard, reports, and data export</li>
+                            </ul>
+                            <p>We may introduce optional premium features in the future (such as automatic bank sync or
+                                advanced analytics), but we're committed to always maintaining a solid, genuinely useful
+                                free tier. We will never paywall features that are currently free.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggle(this)">
+                        <span class="faq-q-text">Do I need to connect my bank account?</span>
+                        <div class="faq-toggle">+</div>
+                    </div>
+                    <div class="faq-a">
+                        <div class="faq-a-inner">
+                            <p><strong>No — and this is a deliberate design choice.</strong> Folo is a manual-entry
+                                finance tracker. You record your own transactions by hand.</p>
+                            <p>This approach has real advantages:</p>
+                            <ul>
+                                <li><strong>Privacy:</strong> we never have access to your bank login credentials or
+                                    live account data</li>
+                                <li><strong>Awareness:</strong> manually logging expenses makes you more conscious of
+                                    your spending habits</li>
+                                <li><strong>Control:</strong> you decide what to track, how to categorise it, and what
+                                    to include</li>
+                                <li><strong>Reliability:</strong> no broken bank connections or missing transactions due
+                                    to API failures</li>
+                            </ul>
+                            <p>We may offer optional bank connectivity integrations in the future as a premium feature
+                                for users who prefer automatic import. Any such integration would be entirely opt-in.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggle(this)">
+                        <span class="faq-q-text">What devices and platforms does Folo support?</span>
+                        <div class="faq-toggle">+</div>
+                    </div>
+                    <div class="faq-a">
+                        <div class="faq-a-inner">
+                            <p>Folo works on any modern device with a web browser. The app is fully responsive and works
+                                well on:</p>
+                            <ul>
+                                <li>Desktop and laptop computers (Chrome, Firefox, Safari, Edge)</li>
+                                <li>Tablets (iPad, Android tablets)</li>
+                                <li>Mobile phones (iPhone, Android — via browser)</li>
+                            </ul>
+                            <p>Native iOS and Android apps are on our development roadmap. In the meantime, you can add
+                                Folo to your phone's home screen from your mobile browser for a near-native experience
+                                (look for "Add to Home Screen" in your browser menu).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggle(this)">
+                        <span class="faq-q-text">Can I use Folo for business finances?</span>
+                        <div class="faq-toggle">+</div>
+                    </div>
+                    <div class="faq-a">
+                        <div class="faq-a-inner">
+                            <p>Folo is designed specifically for personal and household finance tracking. It is not
+                                intended for business accounting, VAT/tax reporting, invoicing, payroll, or multi-user
+                                business use.</p>
+                            <p>If you're a freelancer, you may find Folo useful for tracking personal income and
+                                expenses, but for formal business accounting you should use dedicated tools like
+                                QuickBooks, Wave, or Xero.</p>
+                            <p>For side projects or simple freelance income tracking, Folo works well as a supplement to
+                                (not a replacement for) proper business accounting records.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="faq-section" id="accounts" data-cat="accounts">
+                <div class="faq-section-header">
+                    <div class="section-icon">🏦</div>
+                    <div class="section-title">Accounts</div>
+                    <span class="section-count">5 questions</span>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggle(this)">
+                        <span class="faq-q-text">What types of accounts can I add?</span>
+                        <div class="faq-toggle">+</div>
+                    </div>
+                    <div class="faq-a">
+                        <div class="faq-a-inner">
+                            <p>You can add any type of financial account you want to track. Folo supports the following
+                                account types:</p>
+                            <ul>
+                                <li><strong>Checking</strong> — your everyday bank account</li>
+                                <li><strong>Savings</strong> — savings accounts, emergency funds, goal funds</li>
+                                <li><strong>Credit card</strong> — credit cards (tracked as negative balances by
+                                    default)</li>
+                                <li><strong>Cash</strong> — physical cash on hand</li>
+                                <li><strong>Investment</strong> — brokerage, pension, or investment accounts</li>
+                            </ul>
+                            <p>You can add as many accounts as you like and customise their name and colour for easy
+                                identification.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggle(this)">
+                        <span class="faq-q-text">How do I keep account balances accurate?</span>
+                        <div class="faq-toggle">+</div>
+                    </div>
+                    <div class="faq-a">
+                        <div class="faq-a-inner">
+                            <p>Folo calculates your account balance by starting from the initial balance you set when
+                                creating the account and then adding or subtracting each transaction you record.</p>
+                            <p>To keep balances accurate:</p>
+                            <ul>
+                                <li>Set an accurate opening balance when you first create the account</li>
+                                <li>Log transactions promptly — daily or weekly works best</li>
+                                <li>Periodically reconcile with your actual bank statement</li>
+                            </ul>
+                            <p>If your balance drifts due to forgotten transactions, use the <strong>Adjust
+                                    Balance</strong> button on the Accounts page to manually correct it. This sets the
+                                balance directly without creating a transaction record.</p>
+                            <div class="tip"><span class="tip-icon">📅</span>
+                                <p><strong>Tip:</strong> Set a weekly reminder to log transactions. Five minutes once a
+                                    week is far easier than trying to reconstruct a month of spending from memory.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggle(this)">
+                        <span class="faq-q-text">Why does my credit card show a negative balance?</span>
+                        <div class="faq-toggle">+</div>
+                    </div>
+                    <div class="faq-a">
+                        <div class="faq-a-inner">
+                            <p>Credit cards are liabilities — you owe that money to the card provider. In Folo, credit
+                                card balances are shown as negative numbers to reflect what you owe, consistent with
+                                standard accounting practice.</p>
+                            <p>For example, if you owe $420.80 on your credit card, it will display as
+                                <strong>−$420.80</strong>. This is subtracted from your net worth calculation, giving
+                                you an accurate picture of your overall financial position.
+                            </p>
+                            <p>When you make a payment to your credit card, log it as an expense from your checking
+                                account (category: Bills or a dedicated "Credit Card Payment" category). This reduces
+                                your checking balance and you should separately adjust your credit card balance or log
+                                the payment as income to the card account.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggle(this)">
+                        <span class="faq-q-text">What happens to transactions if I delete an account?</span>
+                        <div class="faq-toggle">+</div>
+                    </div>
+                    <div class="faq-a">
+                        <div class="faq-a-inner">
+                            <p>When you delete an account, the account itself is removed from Folo, but <strong>the
+                                    transactions associated with that account are not deleted</strong> — they remain in
+                                your transaction history and will show an unlinked account indicator.</p>
+                            <p>If you want to fully remove all data associated with an account (both the account and its
+                                transactions), delete the transactions first from the Transactions page (filter by
+                                account), then delete the account.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggle(this)">
+                        <span class="faq-q-text">How is net worth calculated?</span>
+                        <div class="faq-toggle">+</div>
+                    </div>
+                    <div class="faq-a">
+                        <div class="faq-a-inner">
+                            <p>Your net worth is the sum of all account balances — both positive (assets) and negative
+                                (liabilities).</p>
+                            <p><strong>Net Worth = Total Assets − Total Liabilities</strong></p>
+                            <p>For example: if you have $3,000 in your checking account, $8,000 in savings, and owe $400
+                                on a credit card, your net worth is $3,000 + $8,000 − $400 = <strong>$10,600</strong>.
+                            </p>
+                            <p>This calculation only reflects the accounts and balances you've manually entered in Folo.
+                                It is not a comprehensive view of your financial position and should not be used for
+                                financial planning without verification against your actual financial records.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="faq-section" id="transactions" data-cat="transactions">
+                <div class="faq-section-header">
+                    <div class="section-icon">↕</div>
+                    <div class="section-title">Transactions</div>
+                    <span class="section-count">6 questions</span>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggle(this)">
+                        <span class="faq-q-text">How do I log income vs. an expense?</span>
+                        <div class="faq-toggle">+</div>
+                    </div>
+                    <div class="faq-a">
+                        <div class="faq-a-inner">
+                            <p>When adding a transaction, select the <strong>Type</strong> field:</p>
+                            <ul>
+                                <li><strong>Expense (−)</strong> — money leaving an account (groceries, bills, rent,
+                                    etc.)</li>
+                                <li><strong>Income (+)</strong> — money coming into an account (salary, freelance
+                                    payment, etc.)</li>
+                            </ul>
+                            <p>The sign (+/−) is applied automatically based on your selection. You always enter the
+                                amount as a positive number — Folo handles the sign.</p>
+                            <p>Expenses reduce your account balance; income increases it. Both types are reflected in
+                                your dashboard summary for the month.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggle(this)">
+                        <span class="faq-q-text">What categories are available and can I customise them?</span>
+                        <div class="faq-toggle">+</div>
+                    </div>
+                    <div class="faq-a">
+                        <div class="faq-a-inner">
+                            <p>Folo includes the following built-in categories: <strong>Food, Bills, Entertainment,
+                                    Health, Transport, Shopping, Housing, Savings, Income,</strong> and
+                                <strong>Other</strong>.
+                            </p>
+                            <p>These cover the most common personal finance categories and are the same categories used
+                                by the budgeting system, so your spending automatically flows into your budget tracking.
+                            </p>
+                            <p>Custom categories are on our development roadmap. In the meantime, you can use the
+                                <strong>Other</strong> category for anything that doesn't fit neatly into the existing
+                                list, and use the transaction description to add detail.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggle(this)">
+                        <span class="faq-q-text">Can I edit or delete a transaction after saving it?</span>
+                        <div class="faq-toggle">+</div>
+                    </div>
+                    <div class="faq-a">
+                        <div class="faq-a-inner">
+                            <p>Yes, absolutely. Every transaction can be edited or deleted at any time.</p>
+                            <ul>
+                                <li>On the <strong>Transactions page</strong>, each row has an edit (✏) and delete (🗑)
+                                    button</li>
+                                <li>Editing a transaction updates the associated account balance automatically</li>
+                                <li>Deleting a transaction reverses its effect on the account balance</li>
+                            </ul>
+                            <div class="tip"><span class="tip-icon">⚠️</span>
+                                <p><strong>Note:</strong> Deletion is permanent. There is no undo. If you make a
+                                    mistake, you can always add the transaction back manually.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggle(this)">
+                        <span class="faq-q-text">How do I record a transfer between my own accounts?</span>
+                        <div class="faq-toggle">+</div>
+                    </div>
+                    <div class="faq-a">
+                        <div class="faq-a-inner">
+                            <p>Transfers between your own accounts (e.g., moving money from checking to savings) require
+                                two transactions:</p>
+                            <ul>
+                                <li><strong>Transaction 1:</strong> Expense from the source account (e.g., −$500 from
+                                    Checking, category: Savings)</li>
+                                <li><strong>Transaction 2:</strong> Income to the destination account (e.g., +$500 to
+                                    Savings, category: Savings)</li>
+                            </ul>
+                            <p>Use the <strong>Savings</strong> category for both so they don't inflate your expense
+                                totals in your monthly reports. This two-entry method keeps both account balances
+                                accurate.</p>
+                            <p>A dedicated transfer feature that handles this in one step is planned for a future
+                                update.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggle(this)">
+                        <span class="faq-q-text">Can I import transactions from a CSV or bank statement?</span>
+                        <div class="faq-toggle">+</div>
+                    </div>
+                    <div class="faq-a">
+                        <div class="faq-a-inner">
+                            <p>CSV import is on our development roadmap. Currently, transactions are entered manually.
+                            </p>
+                            <p>For users wanting to backfill historical data, we recommend focusing on the current month
+                                first to establish the habit, then gradually adding history if needed. Most users find
+                                that 2–3 months of history is sufficient to see meaningful patterns.</p>
+                            <p>If CSV import is a priority for you, let us know at <a
+                                    href="contact.html">hello@folo.app</a> — user feedback directly shapes our
+                                development priorities.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggle(this)">
+                        <span class="faq-q-text">How do I find old transactions quickly?</span>
+                        <div class="faq-toggle">+</div>
+                    </div>
+                    <div class="faq-a">
+                        <div class="faq-a-inner">
+                            <p>The Transactions page has several tools to help you find what you're looking for:</p>
+                            <ul>
+                                <li><strong>Search bar</strong> — searches transaction descriptions and categories in
+                                    real time</li>
+                                <li><strong>Category filter</strong> — narrows to a single spending category</li>
+                                <li><strong>Account filter</strong> — shows only transactions from a specific account
+                                </li>
+                                <li><strong>Month filter</strong> — jump to any month in your history</li>
+                                <li><strong>Type toggle</strong> — switch between All, Income only, or Expenses only
+                                </li>
+                            </ul>
+                            <p>All filters work together — for example, you can search for "Netflix" and filter to
+                                Entertainment to quickly find all entertainment subscriptions.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="faq-section" id="budgets" data-cat="budgets">
+                <div class="faq-section-header">
+                    <div class="section-icon">◻</div>
+                    <div class="section-title">Budgets</div>
+                    <span class="section-count">5 questions</span>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggle(this)">
+                        <span class="faq-q-text">How do budgets work in Folo?</span>
+                        <div class="faq-toggle">+</div>
+                    </div>
+                    <div class="faq-a">
+                        <div class="faq-a-inner">
+                            <p>Budgets in Folo are monthly spending limits you set per category. Once set, Folo
+                                automatically tracks how much you've spent in that category during the current calendar
+                                month and shows your progress against the limit.</p>
+                            <p>Each budget card shows:</p>
+                            <ul>
+                                <li>How much you've spent vs. your limit</li>
+                                <li>A progress bar that turns amber when you hit 80% and red when you exceed the limit
+                                </li>
+                                <li>How much remains (or how much you're over)</li>
+                            </ul>
+                            <p>Budgets reset automatically at the start of each calendar month.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggle(this)">
+                        <span class="faq-q-text">What happens when I go over budget?</span>
+                        <div class="faq-toggle">+</div>
+                    </div>
+                    <div class="faq-a">
+                        <div class="faq-a-inner">
+                            <p>Going over budget doesn't lock anything or trigger penalties — it's purely informational.
+                                When you exceed a budget limit:</p>
+                            <ul>
+                                <li>The progress bar turns <strong>red</strong></li>
+                                <li>The remaining amount shows as negative (e.g., "⚠ $42.50 over budget")</li>
+                                <li>The dashboard overview will show the over-budget count</li>
+                            </ul>
+                            <p>The goal is awareness, not restriction. Use over-budget notifications as a signal to
+                                review your spending and adjust either your habits or your budget limit for next month.
+                            </p>
+                            <div class="tip"><span class="tip-icon">💡</span>
+                                <p><strong>Tip:</strong> If you consistently go over on a category, it may mean the
+                                    budget is unrealistic rather than that your spending is wrong. Adjust the limit to
+                                    something achievable and tighten it gradually over time.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggle(this)">
+                        <span class="faq-q-text">Do unspent budgets roll over to the next month?</span>
+                        <div class="faq-toggle">+</div>
+                    </div>
+                    <div class="faq-a">
+                        <div class="faq-a-inner">
+                            <p>Currently, budgets do not roll over — each month starts fresh at zero spent against the
+                                same limit. This is the standard envelope-style budgeting approach.</p>
+                            <p>Budget rollover (where unspent amounts carry forward) is a feature we're considering for
+                                a future update. If this is important to your budgeting approach, please let us know via
+                                <a href="contact.html">the feedback form</a>.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggle(this)">
+                        <span class="faq-q-text">Can I set different budget limits for different months?</span>
+                        <div class="faq-toggle">+</div>
+                    </div>
+                    <div class="faq-a">
+                        <div class="faq-a-inner">
+                            <p>Not currently — each budget has a single fixed monthly limit that applies to all months.
+                                You can manually edit the limit at any time (changes take effect immediately for the
+                                current month's remaining calculations).</p>
+                            <p>Variable monthly budgets (e.g., higher entertainment budget in December) are planned for
+                                a future update. For now, a workaround is to temporarily edit the limit at the start of
+                                months when you expect higher or lower spending in a category.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggle(this)">
+                        <span class="faq-q-text">What's a realistic starting budget for common categories?</span>
+                        <div class="faq-toggle">+</div>
+                    </div>
+                    <div class="faq-a">
+                        <div class="faq-a-inner">
+                            <p>This varies widely depending on your location, income, and lifestyle, but a common
+                                starting framework for personal budgeting is the <strong>50/30/20 rule</strong>:</p>
+                            <ul>
+                                <li><strong>50%</strong> of after-tax income toward needs (Housing, Bills, Transport,
+                                    Food basics)</li>
+                                <li><strong>30%</strong> toward wants (Entertainment, Shopping, Dining out)</li>
+                                <li><strong>20%</strong> toward savings and debt repayment</li>
+                            </ul>
+                            <p>Start by tracking your actual spending for 2–4 weeks without a budget, then use those
+                                real numbers as your baseline. Setting budgets based on actual behaviour is more
+                                effective than guessing from scratch.</p>
+                            <p><em>Note: this is general financial information, not personal financial advice. Consult a
+                                    qualified financial advisor for guidance tailored to your situation.</em></p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="faq-section" id="data-privacy" data-cat="data-privacy">
+                <div class="faq-section-header">
+                    <div class="section-icon">🔒</div>
+                    <div class="section-title">Data &amp; privacy</div>
+                    <span class="section-count">7 questions</span>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggle(this)">
+                        <span class="faq-q-text">Where is my data stored?</span>
+                        <div class="faq-toggle">+</div>
+                    </div>
+                    <div class="faq-a">
+                        <div class="faq-a-inner">
+                            <p>Folo stores your data in your browser's <strong>localStorage</strong> — meaning it lives
+                                entirely on your device and never leaves it. No data is sent to any server.</p>
+                            <p>This means:</p>
+                            <ul>
+                                <li>Your financial data stays 100% private on your own device</li>
+                                <li>No account or internet connection is required for the app to function</li>
+                                <li>Data is not synced between devices</li>
+                                <li>Clearing your browser data will erase your Folo data</li>
+                            </ul>
+                            <div class="tip"><span class="tip-icon">⬇️</span>
+                                <p><strong>Recommendation:</strong> Export your data regularly using the export feature
+                                    as a backup. Store the exported file somewhere safe.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggle(this)">
+                        <span class="faq-q-text">Do you sell my data or show ads?</span>
+                        <div class="faq-toggle">+</div>
+                    </div>
+                    <div class="faq-a">
+                        <div class="faq-a-inner">
+                            <p><strong>No — categorically not.</strong> We do not sell, share, rent, or monetise your
+                                personal data in any way. We do not show ads in the application.</p>
+                            <p>Your financial data is deeply personal. It tells a story about your life — where you
+                                live, what you eat, what you value, what you can and can't afford. We treat it with the
+                                seriousness that deserves.</p>
+                            <p>Since Folo stores data locally on your device, we don't have access to it in the first
+                                place. We can't sell what we don't have.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggle(this)">
+                        <span class="faq-q-text">How do I export my data?</span>
+                        <div class="faq-toggle">+</div>
+                    </div>
+                    <div class="faq-a">
+                        <div class="faq-a-inner">
+                            <p>You can export your transaction data as a CSV file at any time from the Transactions
+                                page. A full data export (including accounts and budgets) is available from the Accounts
+                                page under Settings.</p>
+                            <p>We strongly recommend exporting your data regularly and storing a copy somewhere safe
+                                (cloud storage, email, external drive). Since data lives in your browser's localStorage,
+                                it can be lost if you clear browser data.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggle(this)">
+                        <span class="faq-q-text">How do I delete all my data?</span>
+                        <div class="faq-toggle">+</div>
+                    </div>
+                    <div class="faq-a">
+                        <div class="faq-a-inner">
+                            <p>You can permanently reset all your Folo data from the <strong>Accounts page → Settings →
+                                    Reset all data</strong>. This deletes everything stored in localStorage for Folo on
+                                that device — accounts, transactions, budgets, and settings.</p>
+                            <p><strong>This action is immediate and irreversible.</strong> There is no recovery after a
+                                reset. Make sure to export any data you want to keep before resetting.</p>
+                            <p>Since data is stored locally, clearing your browser's site data or cache for folo.app
+                                will also remove all stored data.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggle(this)">
+                        <span class="faq-q-text">Is my data safe if someone else uses my device?</span>
+                        <div class="faq-toggle">+</div>
+                    </div>
+                    <div class="faq-a">
+                        <div class="faq-a-inner">
+                            <p>Since Folo data is stored in your browser's localStorage, anyone with access to your
+                                browser on the same device can open Folo and see your financial data.</p>
+                            <p>To protect your data:</p>
+                            <ul>
+                                <li>Use a device with a screen lock or password</li>
+                                <li>Use a private/incognito browser window when using Folo on a shared device (note:
+                                    incognito data is deleted when the window closes)</li>
+                                <li>Log out of the device or use a separate browser profile for your personal use</li>
+                            </ul>
+                            <p>A PIN or password lock for the app itself is on our development roadmap.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggle(this)">
+                        <span class="faq-q-text">What happens to my data if I switch browsers or devices?</span>
+                        <div class="faq-toggle">+</div>
+                    </div>
+                    <div class="faq-a">
+                        <div class="faq-a-inner">
+                            <p>localStorage is browser-specific and device-specific. Your data does not automatically
+                                sync to other browsers or devices.</p>
+                            <p>To move your data to a new device or browser:</p>
+                            <ul>
+                                <li>Export your data from the current device</li>
+                                <li>Open Folo on the new device/browser</li>
+                                <li>Import the exported file (import feature coming soon)</li>
+                            </ul>
+                            <p>Cross-device sync via a cloud account is planned as a future feature for users who want
+                                it.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggle(this)">
+                        <span class="faq-q-text">Where can I read your Privacy Policy and Terms?</span>
+                        <div class="faq-toggle">+</div>
+                    </div>
+                    <div class="faq-a">
+                        <div class="faq-a-inner">
+                            <p>Our full legal documents are available here:</p>
+                            <ul>
+                                <li><a href="privacy.html">Privacy Policy</a> — how we handle your data, your rights,
+                                    and our security practices</li>
+                                <li><a href="terms.html">Terms and Conditions</a> — the rules governing your use of Folo
+                                </li>
+                            </ul>
+                            <p>Both documents are written to be readable by real people, not just lawyers. If anything
+                                is unclear, contact us at <a href="contact.html">legal@folo.app</a>.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="faq-section" id="billing" data-cat="billing">
+                <div class="faq-section-header">
+                    <div class="section-icon">💳</div>
+                    <div class="section-title">Billing</div>
+                    <span class="section-count">5 questions</span>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggle(this)">
+                        <span class="faq-q-text">Does Folo have a paid plan?</span>
+                        <div class="faq-toggle">+</div>
+                    </div>
+                    <div class="faq-a">
+                        <div class="faq-a-inner">
+                            <p>Currently, Folo is entirely free. All features are available at no cost.</p>
+                            <p>We plan to introduce optional premium features in the future (such as automatic bank
+                                sync, advanced reporting, and cross-device sync). These will be offered as an optional
+                                paid add-on — all existing free features will remain free.</p>
+                            <p>We'll give ample notice before introducing any paid features and will never charge for
+                                things that are currently free.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggle(this)">
+                        <span class="faq-q-text">Will I be automatically charged if a free trial ends?</span>
+                        <div class="faq-toggle">+</div>
+                    </div>
+                    <div class="faq-a">
+                        <div class="faq-a-inner">
+                            <p>We will never enroll you in a paid plan without your explicit consent. Any future premium
+                                plans will require a deliberate opt-in — no automatic upgrades or surprise charges.</p>
+                            <p>If we introduce a trial for premium features, it will be clearly labelled, the end date
+                                will be visible in your account, and you will be reminded before any charge is made.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggle(this)">
+                        <span class="faq-q-text">What's your refund policy?</span>
+                        <div class="faq-toggle">+</div>
+                    </div>
+                    <div class="faq-a">
+                        <div class="faq-a-inner">
+                            <p>For future premium subscriptions, we offer a <strong>14-day money-back guarantee</strong>
+                                for new subscribers. If you're not satisfied within 14 days of your first paid
+                                subscription, contact <a href="contact.html">billing@folo.app</a> for a full refund, no
+                                questions asked.</p>
+                            <p>After the 14-day period, fees are generally non-refundable except where required by
+                                applicable consumer protection law. Annual subscriptions cancelled after the initial
+                                period may receive a pro-rata refund where required by law.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggle(this)">
+                        <span class="faq-q-text">How do I cancel a subscription?</span>
+                        <div class="faq-toggle">+</div>
+                    </div>
+                    <div class="faq-a">
+                        <div class="faq-a-inner">
+                            <p>You can cancel a premium subscription at any time from your account settings.
+                                Cancellation takes effect at the end of your current billing period — you retain access
+                                to premium features until then.</p>
+                            <p>If you have trouble cancelling through the app, email <a
+                                    href="contact.html">billing@folo.app</a> and we'll process it manually within one
+                                business day.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggle(this)">
+                        <span class="faq-q-text">What payment methods do you accept?</span>
+                        <div class="faq-toggle">+</div>
+                    </div>
+                    <div class="faq-a">
+                        <div class="faq-a-inner">
+                            <p>When premium plans launch, we plan to accept:</p>
+                            <ul>
+                                <li>Credit and debit cards (Visa, Mastercard, Amex)</li>
+                                <li>PayPal</li>
+                                <li>Mobile money (for select African markets)</li>
+                            </ul>
+                            <p>Payment processing is handled by a PCI-compliant third-party provider. We never store
+                                your full card details on our servers.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="faq-section" id="technical" data-cat="technical">
+                <div class="faq-section-header">
+                    <div class="section-icon">⚙</div>
+                    <div class="section-title">Technical</div>
+                    <span class="section-count">5 questions</span>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggle(this)">
+                        <span class="faq-q-text">Why did my data disappear?</span>
+                        <div class="faq-toggle">+</div>
+                    </div>
+                    <div class="faq-a">
+                        <div class="faq-a-inner">
+                            <p>If your data has disappeared, the most common causes are:</p>
+                            <ul>
+                                <li><strong>Browser data cleared:</strong> clearing cookies, cache, or site data also
+                                    clears localStorage</li>
+                                <li><strong>Different browser:</strong> data is browser-specific — data in Chrome won't
+                                    appear in Firefox</li>
+                                <li><strong>Private/incognito mode:</strong> incognito sessions don't persist
+                                    localStorage after the window closes</li>
+                                <li><strong>Different device:</strong> data doesn't sync between devices</li>
+                                <li><strong>Reset:</strong> you or someone with access to your browser may have pressed
+                                    "Reset all data"</li>
+                            </ul>
+                            <p>Unfortunately, if localStorage data is lost without a prior export, it cannot be
+                                recovered — this is a fundamental limitation of browser-based storage. This is why we
+                                strongly recommend <strong>exporting your data regularly</strong>.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggle(this)">
+                        <span class="faq-q-text">Folo looks broken or isn't loading. What should I do?</span>
+                        <div class="faq-toggle">+</div>
+                    </div>
+                    <div class="faq-a">
+                        <div class="faq-a-inner">
+                            <p>Try these steps in order:</p>
+                            <ul>
+                                <li><strong>Hard refresh:</strong> press Ctrl+Shift+R (Windows/Linux) or Cmd+Shift+R
+                                    (Mac) to force a full reload</li>
+                                <li><strong>Clear cache:</strong> clear your browser's cache and reload the page</li>
+                                <li><strong>Try another browser:</strong> test in a different browser to rule out
+                                    browser-specific issues</li>
+                                <li><strong>Disable extensions:</strong> some browser extensions (especially ad
+                                    blockers) can interfere with app functionality</li>
+                                <li><strong>Check the console:</strong> open your browser's developer tools (F12) and
+                                    look for error messages in the Console tab</li>
+                            </ul>
+                            <p>If none of these work, please <a href="contact.html">contact us</a> with details about
+                                your browser, operating system, and what you were doing when the issue occurred.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggle(this)">
+                        <span class="faq-q-text">Does Folo work offline?</span>
+                        <div class="faq-toggle">+</div>
+                    </div>
+                    <div class="faq-a">
+                        <div class="faq-a-inner">
+                            <p>Yes — since all data is stored in your browser's localStorage, Folo works fully offline
+                                once the page has been loaded. You can add transactions, view your dashboard, and manage
+                                budgets without an internet connection.</p>
+                            <p>You will need an internet connection to:</p>
+                            <ul>
+                                <li>Load the app for the first time</li>
+                                <li>Load any updates to the app</li>
+                                <li>Use any future cloud sync features (when available)</li>
+                            </ul>
+                            <p>For the best offline experience, add Folo to your device's home screen (look for "Add to
+                                Home Screen" in your browser menu).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggle(this)">
+                        <span class="faq-q-text">How much data can localStorage hold?</span>
+                        <div class="faq-toggle">+</div>
+                    </div>
+                    <div class="faq-a">
+                        <div class="faq-a-inner">
+                            <p>Most modern browsers allocate <strong>5–10 MB</strong> of localStorage space per website.
+                                In practical terms for Folo, this is enough for:</p>
+                            <ul>
+                                <li>Thousands of transactions (each transaction is a few hundred bytes)</li>
+                                <li>Dozens of accounts and budgets</li>
+                                <li>Years of financial history for a typical user</li>
+                            </ul>
+                            <p>You are very unlikely to hit this limit through normal use. If you do (which would
+                                require tens of thousands of transactions), Folo will display a warning and you can
+                                export and clear older data.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggle(this)">
+                        <span class="faq-q-text">I found a bug. How do I report it?</span>
+                        <div class="faq-toggle">+</div>
+                    </div>
+                    <div class="faq-a">
+                        <div class="faq-a-inner">
+                            <p>We genuinely appreciate bug reports — they make Folo better for everyone. To report a
+                                bug:</p>
+                            <ul>
+                                <li>Go to <a href="contact.html">folo.app/contact</a> and select <strong>"Bug
+                                        report"</strong> as the topic</li>
+                                <li>Include: what you were doing, what you expected to happen, what actually happened
+                                </li>
+                                <li>Include your browser name and version (e.g., "Chrome 124 on Windows 11")</li>
+                                <li>If possible, include a screenshot or copy any error messages from the browser
+                                    console (F12 → Console)</li>
+                            </ul>
+                            <p>We aim to acknowledge bug reports within 24 hours and fix critical issues as quickly as
+                                possible.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="no-results" id="noResults">
+                <span>🔍</span>
+                No questions match your search. Try different keywords, or <a href="contact.html"
+                    class="faq-link-accent">ask us directly</a>.
+            </div>
+
+        </div>
+    </div>
+
+    <div class="cta-strip">
+        <div class="cta-strip-card">
+            <h2>Still have questions?</h2>
+            <p>We read and reply to every message personally. Usually within 24 hours.</p>
+            <div class="cta-row">
+                <a href="mailto:seantk211@gmail.com" class="btn-outline-white">Send us a message</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <a href="index.html" class="footer-logo">fo<span>lo</span></a>
+        <ul class="footer-links">
+            <li><a href="about.html">About</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="#">Privacy</a></li>
+            <li><a href="#">Terms</a></li>
+        </ul>
+        <p class="footer-copy">© 2026 Folo. All rights reserved.</p>
+    </footer>
+
+    <script src="faq.js"></script>
+</body>
+
+</html>
