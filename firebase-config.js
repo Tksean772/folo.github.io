@@ -18,4 +18,5 @@ const app = initializeApp(firebaseConfig);
 
 // Export the tools so your other files can use them
 export const auth = getAuth(app);
-export const db = getFirestore(app);
+export const db = getFirestore(app, 'folo'); // Explicitly connect to the 'folo' database
+
