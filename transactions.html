@@ -4,11 +4,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Transactions - Folo</title>
+  <title>Transactions — Folo</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link
-    href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="transactions.css">
 </head>
 
@@ -19,10 +17,10 @@
     <a href="index.html" class="sidebar-logo">fo<span>lo</span></a>
     <span class="sidebar-section">Main</span>
     <ul class="sidebar-nav">
-      <li><a href="dashboard.html"><span class="nav-icon">D</span> Dashboard</a></li>
-      <li><a href="transactions.html"><span class="nav-icon">T</span> Transactions</a></li>
-      <li><a href="budgets.html"><span class="nav-icon">B</span> Budgets</a></li>
-      <li><a href="accounts.html"><span class="nav-icon">A</span> Accounts</a></li>
+      <li><a href="dashboard.html"><span class="nav-icon">◈</span> Dashboard</a></li>
+      <li><a href="transactions.html"><span class="nav-icon">↕</span> Transactions</a></li>
+      <li><a href="budgets.html"><span class="nav-icon">◻</span> Budgets</a></li>
+      <li><a href="accounts.html"><span class="nav-icon">◎</span> Accounts</a></li>
     </ul>
     <div class="sidebar-bottom">
       <div class="sidebar-user">
@@ -53,7 +51,7 @@
       <div class="card fade-in-2">
         <div class="filter-bar">
           <div class="search-wrap-app">
-            <span class="search-icon-app">?</span>
+            <span class="search-icon-app">🔍</span>
             <input class="form-input" id="searchInput" placeholder="Search transactions..." oninput="renderTable()">
           </div>
           <select class="filter-select" id="filterCat" onchange="renderTable()">
@@ -96,7 +94,7 @@
     <div class="modal">
       <div class="modal-header">
         <div class="modal-title" id="modalTitle">Add transaction</div>
-        <button class="modal-close" onclick="closeModal()">x</button>
+        <button class="modal-close" onclick="closeModal()">✕</button>
       </div>
       <div class="form-group">
         <label class="form-label">Description</label>
@@ -136,155 +134,202 @@
     </div>
   </div>
 
-  <script>
-    const session = JSON.parse(localStorage.getItem('folo_session'));
-    if (!session) window.location.href = 'login.html';
+  <script type="module">
+    import { db } from './firebase-config.js';
+    import {
+      collection, getDocs, addDoc, updateDoc, doc, query, orderBy
+    } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+    // ─── Session guard ──────────────────────────────────────────────────────────
+    const session = JSON.parse(localStorage.getItem('folo_session') || 'null');
+    if (!session || !session.token) window.location.replace('login.html');
     window.addEventListener('pageshow', () => {
-      const activeSession = JSON.parse(localStorage.getItem('folo_session') || 'null');
-      if (!activeSession || !activeSession.token) {
-        window.location.replace('login.html');
-      }
+      const s = JSON.parse(localStorage.getItem('folo_session') || 'null');
+      if (!s || !s.token) window.location.replace('login.html');
     });
 
-    const CATEGORIES = [
-      'Food', 'Transport', 'Housing', 'Utilities', 'Healthcare', 'Entertainment',
-      'Shopping', 'Education', 'Savings', 'Salary', 'Business', 'Other'
-    ];
+    const CATEGORIES = ['Food', 'Transport', 'Housing', 'Utilities', 'Healthcare', 'Entertainment',
+      'Shopping', 'Education', 'Savings', 'Salary', 'Business', 'Other'];
 
-    let data = { accounts: [], transactions: [] };
-    let editId = null;
+    let appData   = { accounts: [], transactions: [] };
+    let editId    = null;
     let typeFilter = 'all';
     let currentPage = 1;
-    const PER_PAGE = 12;
+    const PER_PAGE  = 12;
 
-    async function readJsonResponse(res) {
-      const raw = await res.text();
-      if (!raw.trim()) return {};
-      try {
-        return JSON.parse(raw);
-      } catch {
-        throw new Error('The server returned an invalid response.');
-      }
-    }
+    const txnRef = () => collection(db, 'users', session.user.id, 'transactions');
+    const accRef = () => collection(db, 'users', session.user.id, 'accounts');
 
     function fmt(amount) {
       return new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: session.user.currency || 'USD'
+        style: 'currency', currency: session.user.currency || 'USD'
       }).format(Number(amount) || 0);
     }
 
     function fmtDate(date) {
-      return new Date(date).toLocaleDateString('en-US', {
-        month: 'short',
-        day: 'numeric',
-        year: 'numeric'
-      });
+      return new Date(date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
     }
 
-    function openSidebar() {
-      document.getElementById('sidebar').classList.add('open');
-      document.getElementById('overlay').classList.add('open');
+    // ─── Load ───────────────────────────────────────────────────────────────────
+    async function loadTransactions() {
+      try {
+        const [accSnap, txnSnap] = await Promise.all([
+          getDocs(accRef()),
+          getDocs(query(txnRef(), orderBy('transaction_date', 'desc')))
+        ]);
+
+        appData.accounts     = accSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+        appData.transactions = txnSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+
+        updateSidebar();
+        populateFilters();
+        renderTable();
+      } catch (err) {
+        console.error('Load failed:', err);
+        alert('Could not load transactions. Please refresh.');
+      }
     }
 
-    function closeSidebar() {
-      document.getElementById('sidebar').classList.remove('open');
-      document.getElementById('overlay').classList.remove('open');
-    }
+    // ─── Save transaction ───────────────────────────────────────────────────────
+    window.saveTransaction = async function() {
+      const desc           = document.getElementById('fDesc').value.trim();
+      const amount         = parseFloat(document.getElementById('fAmount').value);
+      const category       = document.getElementById('fCat').value;
+      const accountId      = document.getElementById('fAcc').value;
+      const type           = document.getElementById('fType').value;
+      const transactionDate = document.getElementById('fDate').value;
 
-    function logout() {
-      localStorage.removeItem('folo_session');
-      sessionStorage.clear();
-      window.location.replace('login.html');
-    }
+      if (!desc || Number.isNaN(amount) || !accountId || !transactionDate) {
+        alert('Please fill in all fields.'); return;
+      }
 
-    function setActiveNav() {
-      document.querySelectorAll('.sidebar-nav a').forEach(link => {
-        if (link.getAttribute('href') === 'transactions.html') link.classList.add('active');
-      });
-    }
+      try {
+        if (editId) {
+          // Update existing
+          await updateDoc(doc(db, 'users', session.user.id, 'transactions', editId), {
+            description: desc,
+            amount: type === 'expense' ? -Math.abs(amount) : Math.abs(amount),
+            type, category, accountId, transaction_date: transactionDate
+          });
+          // Also update the account balance for the edited account
+        } else {
+          // Add new
+          const finalAmount = type === 'expense' ? -Math.abs(amount) : Math.abs(amount);
+          await addDoc(txnRef(), {
+            description: desc,
+            amount: finalAmount,
+            type, category,
+            accountId,
+            transaction_date: transactionDate,
+            createdAt: new Date().toISOString()
+          });
 
-    function updateSidebar() {
-      document.getElementById('sidebarName').textContent = session.user.name;
-      document.getElementById('sidebarAvatar').textContent = session.user.name.charAt(0).toUpperCase();
-    }
+          // Update the account balance
+          const account = appData.accounts.find(a => a.id === accountId);
+          if (account) {
+            const newBalance = Number(account.balance || 0) + finalAmount;
+            await updateDoc(doc(db, 'users', session.user.id, 'accounts', accountId), { balance: newBalance });
+          }
+        }
 
+        closeModal();
+        await loadTransactions();
+      } catch (err) {
+        console.error('Save failed:', err);
+        alert(err.message || 'Failed to save transaction.');
+      }
+    };
+
+    // ─── Filters ────────────────────────────────────────────────────────────────
     function populateFilters() {
-      const catSel = document.getElementById('filterCat');
-      const accSel = document.getElementById('filterAcc');
-      const monthSel = document.getElementById('filterMonth');
+      const catSelect = document.getElementById('filterCat');
+      const accSelect = document.getElementById('filterAcc');
+      const monthSelect = document.getElementById('filterMonth');
       const fCat = document.getElementById('fCat');
       const fAcc = document.getElementById('fAcc');
 
-      catSel.innerHTML = '<option value="">All categories</option>';
-      fCat.innerHTML = '';
-      CATEGORIES.forEach(category => {
-        catSel.innerHTML += `<option value="${category}">${category}</option>`;
-        fCat.innerHTML += `<option value="${category}">${category}</option>`;
-      });
+      // Category filter
+      const cats = [...new Set(appData.transactions.map(t => t.category).filter(Boolean))];
+      catSelect.innerHTML = '<option value="">All categories</option>' +
+        cats.map(c => `<option value="${c}">${c}</option>`).join('');
+      fCat.innerHTML = CATEGORIES.map(c => `<option value="${c}">${c}</option>`).join('');
 
-      accSel.innerHTML = '<option value="">All accounts</option>';
-      fAcc.innerHTML = '';
-      data.accounts.forEach(account => {
-        accSel.innerHTML += `<option value="${account.id}">${account.name}</option>`;
-        fAcc.innerHTML += `<option value="${account.id}">${account.name}</option>`;
-      });
+      // Account filter
+      accSelect.innerHTML = '<option value="">All accounts</option>' +
+        appData.accounts.map(a => `<option value="${a.id}">${a.name}</option>`).join('');
+      fAcc.innerHTML = appData.accounts.length
+        ? appData.accounts.map(a => `<option value="${a.id}">${a.name}</option>`).join('')
+        : '<option value="">No accounts yet</option>';
 
-      monthSel.innerHTML = '<option value="">All time</option>';
-      const months = [...new Set(data.transactions.map(t => (t.transaction_date || '').slice(0, 7)).filter(Boolean))]
-        .sort()
-        .reverse();
-
-      months.forEach(month => {
-        const [year, monthNum] = month.split('-');
-        const label = new Date(Number(year), Number(monthNum) - 1, 1).toLocaleDateString('en-US', {
-          month: 'long',
-          year: 'numeric'
-        });
-        monthSel.innerHTML += `<option value="${month}">${label}</option>`;
-      });
+      // Month filter
+      const months = [...new Set(appData.transactions.map(t => (t.transaction_date || '').slice(0, 7)).filter(Boolean))].sort().reverse();
+      monthSelect.innerHTML = '<option value="">All time</option>' +
+        months.map(m => `<option value="${m}">${new Date(m + '-01').toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</option>`).join('');
     }
 
-    function setType(type) {
+    window.setType = function(type) {
       typeFilter = type;
       currentPage = 1;
       document.getElementById('btnAll').className = type === 'all' ? 'active-all' : '';
       document.getElementById('btnInc').className = type === 'income' ? 'active-inc' : '';
       document.getElementById('btnExp').className = type === 'expense' ? 'active-exp' : '';
       renderTable();
-    }
+    };
 
     function getFiltered() {
       const search = document.getElementById('searchInput').value.trim().toLowerCase();
-      const cat = document.getElementById('filterCat').value;
-      const acc = document.getElementById('filterAcc').value;
-      const month = document.getElementById('filterMonth').value;
+      const cat    = document.getElementById('filterCat').value;
+      const acc    = document.getElementById('filterAcc').value;
+      const month  = document.getElementById('filterMonth').value;
 
-      return data.transactions
-        .filter(t => {
-          const description = (t.description || '').toLowerCase();
-          const category = (t.category || '').toLowerCase();
-
-          if (search && !description.includes(search) && !category.includes(search)) return false;
-          if (cat && t.category !== cat) return false;
-          if (acc && String(t.account_id) !== String(acc)) return false;
-          if (month && !(t.transaction_date || '').startsWith(month)) return false;
-          if (typeFilter === 'income' && t.type !== 'income') return false;
-          if (typeFilter === 'expense' && t.type !== 'expense') return false;
-          return true;
-        })
-        .sort((a, b) => new Date(b.transaction_date) - new Date(a.transaction_date));
+      return appData.transactions.filter(t => {
+        if (search && !(t.description || '').toLowerCase().includes(search) && !(t.category || '').toLowerCase().includes(search)) return false;
+        if (cat   && t.category !== cat) return false;
+        if (acc   && t.accountId !== acc) return false;
+        if (month && !(t.transaction_date || '').startsWith(month)) return false;
+        if (typeFilter === 'income'  && t.type !== 'income')  return false;
+        if (typeFilter === 'expense' && t.type !== 'expense') return false;
+        return true;
+      }).sort((a, b) => new Date(b.transaction_date) - new Date(a.transaction_date));
     }
 
-    function renderSummary(filtered) {
-      const income = filtered
-        .filter(t => t.type === 'income')
-        .reduce((sum, t) => sum + Math.abs(Number(t.amount)), 0);
-      const expenses = filtered
-        .filter(t => t.type === 'expense')
-        .reduce((sum, t) => sum + Math.abs(Number(t.amount)), 0);
-      const net = income - expenses;
+    window.renderTable = function() {
+      const filtered   = getFiltered();
+      renderSummary(filtered);
+      const total      = filtered.length;
+      const totalPages = Math.max(1, Math.ceil(total / PER_PAGE));
+      if (currentPage > totalPages) currentPage = totalPages;
+      const page = filtered.slice((currentPage - 1) * PER_PAGE, currentPage * PER_PAGE);
+      const tbody = document.getElementById('txnTableBody');
 
+      if (!page.length) {
+        tbody.innerHTML = '<tr><td colspan="6"><div class="empty-state"><p>No transactions found.</p></div></td></tr>';
+        renderPagination(total, totalPages); return;
+      }
+
+      tbody.innerHTML = page.map(t => {
+        const account = appData.accounts.find(a => a.id === t.accountId);
+        const numericAmount = Math.abs(Number(t.amount));
+        const displayAmount = t.type === 'expense' ? -numericAmount : numericAmount;
+        return `
+          <tr>
+            <td style="padding:0.85rem 1rem;font-weight:500">${t.description || ''}</td>
+            <td style="color:var(--muted)">${fmtDate(t.transaction_date)}</td>
+            <td><span class="badge badge-gray">${t.category || 'Uncategorized'}</span></td>
+            <td style="color:var(--muted)">${account ? account.name : '—'}</td>
+            <td style="text-align:right" class="${t.type === 'income' ? 'amount-pos' : 'amount-neg'}">${displayAmount > 0 ? '+' : ''}${fmt(displayAmount)}</td>
+            <td><div class="action-btns"><button class="icon-btn" onclick="openModal('${t.id}')" title="Edit">Edit</button></div></td>
+          </tr>
+        `;
+      }).join('');
+
+      renderPagination(total, totalPages);
+    };
+
+    function renderSummary(filtered) {
+      const income   = filtered.filter(t => t.type === 'income').reduce((s, t) => s + Math.abs(Number(t.amount)), 0);
+      const expenses = filtered.filter(t => t.type === 'expense').reduce((s, t) => s + Math.abs(Number(t.amount)), 0);
+      const net = income - expenses;
       document.getElementById('summaryRow').innerHTML = `
         <div class="summary-pill">${filtered.length} transaction${filtered.length !== 1 ? 's' : ''}</div>
         <div class="summary-pill">Income: <span style="color:var(--accent);font-weight:500">${fmt(income)}</span></div>
@@ -295,162 +340,60 @@
 
     function renderPagination(total, totalPages) {
       const start = total === 0 ? 0 : (currentPage - 1) * PER_PAGE + 1;
-      const end = Math.min(currentPage * PER_PAGE, total);
-
+      const end   = Math.min(currentPage * PER_PAGE, total);
       document.getElementById('pagination').innerHTML = `
-        <span>${start}-${end} of ${total}</span>
+        <span>${start}–${end} of ${total}</span>
         <div class="pg-btns">
           <button class="pg-btn" onclick="goPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>&lt;</button>
-          ${Array.from({ length: totalPages }, (_, index) => `<button class="pg-btn${index + 1 === currentPage ? ' current' : ''}" onclick="goPage(${index + 1})">${index + 1}</button>`).join('')}
+          ${Array.from({ length: totalPages }, (_, i) => `<button class="pg-btn${i+1 === currentPage ? ' current' : ''}" onclick="goPage(${i+1})">${i+1}</button>`).join('')}
           <button class="pg-btn" onclick="goPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>&gt;</button>
         </div>
       `;
     }
 
-    function renderTable() {
-      const filtered = getFiltered();
-      renderSummary(filtered);
-
-      const total = filtered.length;
-      const totalPages = Math.max(1, Math.ceil(total / PER_PAGE));
-      if (currentPage > totalPages) currentPage = totalPages;
-
-      const page = filtered.slice((currentPage - 1) * PER_PAGE, currentPage * PER_PAGE);
-      const tbody = document.getElementById('txnTableBody');
-
-      if (!page.length) {
-        tbody.innerHTML = '<tr><td colspan="6"><div class="empty-state"><p>No transactions found.</p></div></td></tr>';
-        renderPagination(total, totalPages);
-        return;
-      }
-
-      tbody.innerHTML = page.map(t => {
-        const account = data.accounts.find(a => String(a.id) === String(t.account_id));
-        const numericAmount = Math.abs(Number(t.amount));
-        const displayAmount = t.type === 'expense' ? -numericAmount : numericAmount;
-
-        return `
-          <tr>
-            <td style="padding:0.85rem 1rem;font-weight:500">${t.description || ''}</td>
-            <td style="color:var(--muted)">${fmtDate(t.transaction_date)}</td>
-            <td><span class="badge badge-gray">${t.category || 'Uncategorized'}</span></td>
-            <td style="color:var(--muted)">${account ? account.name : '-'}</td>
-            <td style="text-align:right" class="${t.type === 'income' ? 'amount-pos' : 'amount-neg'}">${displayAmount > 0 ? '+' : ''}${fmt(displayAmount)}</td>
-            <td><div class="action-btns"><button class="icon-btn" onclick="openModal('${t.id}')" title="Edit">Edit</button></div></td>
-          </tr>
-        `;
-      }).join('');
-
-      renderPagination(total, totalPages);
-    }
-
-    function goPage(page) {
+    window.goPage = function(page) {
       const totalPages = Math.max(1, Math.ceil(getFiltered().length / PER_PAGE));
       if (page < 1 || page > totalPages) return;
       currentPage = page;
       renderTable();
-    }
+    };
 
-    function openModal(id = null) {
+    window.openModal = function(id = null) {
       editId = id;
       document.getElementById('modalTitle').textContent = id ? 'Edit transaction' : 'Add transaction';
-
       if (id) {
-        const transaction = data.transactions.find(item => String(item.id) === String(id));
-        if (!transaction) return;
-
-        document.getElementById('fDesc').value = transaction.description || '';
-        document.getElementById('fAmount').value = Math.abs(Number(transaction.amount)) || '';
-        document.getElementById('fType').value = transaction.type || 'expense';
-        document.getElementById('fCat').value = transaction.category || CATEGORIES[0];
-        document.getElementById('fAcc').value = transaction.account_id || '';
-        document.getElementById('fDate').value = (transaction.transaction_date || '').slice(0, 10);
+        const t = appData.transactions.find(x => x.id === id);
+        if (!t) return;
+        document.getElementById('fDesc').value   = t.description || '';
+        document.getElementById('fAmount').value = Math.abs(Number(t.amount)) || '';
+        document.getElementById('fType').value   = t.type || 'expense';
+        document.getElementById('fCat').value    = t.category || CATEGORIES[0];
+        document.getElementById('fAcc').value    = t.accountId || '';
+        document.getElementById('fDate').value   = (t.transaction_date || '').slice(0, 10);
       } else {
-        document.getElementById('fDesc').value = '';
+        document.getElementById('fDesc').value   = '';
         document.getElementById('fAmount').value = '';
-        document.getElementById('fType').value = 'expense';
-        document.getElementById('fCat').value = CATEGORIES[0];
-        document.getElementById('fAcc').value = data.accounts[0]?.id || '';
-        document.getElementById('fDate').value = new Date().toISOString().slice(0, 10);
+        document.getElementById('fType').value   = 'expense';
+        document.getElementById('fCat').value    = CATEGORIES[0];
+        document.getElementById('fAcc').value    = appData.accounts[0]?.id || '';
+        document.getElementById('fDate').value   = new Date().toISOString().slice(0, 10);
       }
-
       document.getElementById('modalBackdrop').classList.add('open');
+    };
+
+    window.closeModal   = () => { document.getElementById('modalBackdrop').classList.remove('open'); editId = null; };
+    window.maybeClose   = e  => { if (e.target.id === 'modalBackdrop') window.closeModal(); };
+    window.openSidebar  = () => { document.getElementById('sidebar').classList.add('open'); document.getElementById('overlay').classList.add('open'); };
+    window.closeSidebar = () => { document.getElementById('sidebar').classList.remove('open'); document.getElementById('overlay').classList.remove('open'); };
+    window.logout       = () => { localStorage.removeItem('folo_session'); sessionStorage.clear(); window.location.replace('login.html'); };
+
+    function updateSidebar() {
+      document.getElementById('sidebarName').textContent = session.user.name || 'You';
+      document.getElementById('sidebarAvatar').textContent = (session.user.name || 'Y').charAt(0).toUpperCase();
     }
 
-    function closeModal() {
-      document.getElementById('modalBackdrop').classList.remove('open');
-      editId = null;
-    }
-
-    function maybeClose(event) {
-      if (event.target.id === 'modalBackdrop') closeModal();
-    }
-
-    async function loadTransactions() {
-      try {
-        const res = await fetch(`api/data/get_data.php?userId=${session.user.id}`);
-        const payload = await readJsonResponse(res);
-
-        if (!res.ok) throw new Error(payload.error || 'Failed to load transactions');
-
-        data.accounts = payload.accounts || [];
-        data.transactions = payload.transactions || [];
-        updateSidebar();
-        populateFilters();
-        renderTable();
-      } catch (error) {
-        console.error('Load failed:', error);
-        alert('Could not load transactions right now.');
-      }
-    }
-
-    async function saveTransaction() {
-      const desc = document.getElementById('fDesc').value.trim();
-      const amount = parseFloat(document.getElementById('fAmount').value);
-      const category = document.getElementById('fCat').value;
-      const accountId = document.getElementById('fAcc').value;
-      const type = document.getElementById('fType').value;
-      const transactionDate = document.getElementById('fDate').value;
-
-      if (!desc || Number.isNaN(amount) || !accountId || !transactionDate) {
-        alert('Fill all fields');
-        return;
-      }
-
-      if (editId) {
-        alert('Editing transactions is not available yet.');
-        return;
-      }
-
-      try {
-        const res = await fetch('api/data/add_transaction.php', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            userId: session.user.id,
-            accountId,
-            description: desc,
-            amount: type === 'expense' ? -Math.abs(amount) : Math.abs(amount),
-            type,
-            category,
-            transactionDate
-          })
-        });
-
-        const payload = await readJsonResponse(res);
-        if (!res.ok) throw new Error(payload.error || 'Failed to save transaction');
-
-        closeModal();
-        await loadTransactions();
-      } catch (error) {
-        console.error('Save failed:', error);
-        alert(error.message || 'Save failed');
-      }
-    }
-
-    setActiveNav();
     loadTransactions();
   </script>
-</body>
 
+</body>
 </html>
