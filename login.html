@@ -40,7 +40,6 @@
     </div>
   </div>
 
-  <!-- RIGHT -->
   <div class="auth-right">
     <div class="auth-form-wrap">
       <div class="auth-form-title">Welcome back</div>
@@ -67,7 +66,7 @@
         <label class="auth-check-wrap">
           <input type="checkbox" id="remember"> Remember me
         </label>
-        <a href="" class="forgot-link">Forgot password?</a>
+        <a href="forgot.html" class="forgot-link">Forgot password?</a>
       </div>
 
       <button class="auth-btn" id="loginBtn" onclick="handleLogin()">
@@ -77,39 +76,80 @@
 
       <div class="auth-divider">or continue with</div>
 
-      <a href="#" class="oauth-btn" onclick="oauthNotice()">
+      <a href="#" class="oauth-btn" onclick="oauthNotice(); return false;">
         <svg width="18" height="18" viewBox="0 0 18 18"><path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/><path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z" fill="#34A853"/><path d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"/><path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 6.29C4.672 4.163 6.656 3.58 9 3.58z" fill="#EA4335"/></svg>
         Continue with Google
       </a>
     </div>
   </div>
-
 </div>
+
 <script type="module">
-  import { auth } from './firebase-config.js';
+  import { auth, db } from './firebase-config.js';
   import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+  import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+  function showAlert(msg) {
+    const box = document.getElementById('alertBox');
+    document.getElementById('alertMsg').textContent = msg;
+    box.classList.add('show');
+  }
+
+  window.oauthNotice = () => alert('Google sign-in coming soon.');
 
   window.handleLogin = async function() {
     const email = document.getElementById('email').value.trim();
     const password = document.getElementById('password').value;
     const btn = document.getElementById('loginBtn');
+    const spinner = document.getElementById('loginSpinner');
+    const btnText = document.getElementById('loginBtnText');
+
+    if (!email || !password) { showAlert('Please enter your email and password.'); return; }
+
+    btn.disabled = true;
+    btnText.textContent = 'Logging in...';
+    spinner.style.display = 'block';
 
     try {
-      btn.disabled = true;
+      // 1. Sign in with Firebase Auth
       const cred = await signInWithEmailAndPassword(auth, email, password);
-      
-      localStorage.setItem('folo_session', JSON.stringify({ 
-        token: cred.user.accessToken, 
-        user: cred.user.email 
-      }));
-      
+
+      // 2. Fetch the user's profile from Firestore
+      const userDoc = await getDoc(doc(db, 'users', cred.user.uid));
+      const profile = userDoc.exists() ? userDoc.data() : {};
+
+      // 3. Build a complete session object that all app pages can use
+      const session = {
+        token: await cred.user.getIdToken(),
+        user: {
+          id: cred.user.uid,
+          email: cred.user.email,
+          name: profile.firstName ? `${profile.firstName} ${profile.lastName || ''}`.trim() : (cred.user.displayName || 'User'),
+          firstName: profile.firstName || '',
+          lastName: profile.lastName || '',
+          currency: profile.currency || 'USD'
+        }
+      };
+
+      localStorage.setItem('folo_session', JSON.stringify(session));
       window.location.href = 'dashboard.html';
+
     } catch (e) {
-      document.getElementById('alertBox').className = 'alert-box err show';
-      document.getElementById('alertMsg').textContent = "Invalid login credentials.";
+      console.error(e);
+      const msg = e.code === 'auth/user-not-found' || e.code === 'auth/wrong-password' || e.code === 'auth/invalid-credential'
+        ? 'Invalid email or password.'
+        : e.message;
+      showAlert(msg);
     } finally {
       btn.disabled = false;
+      btnText.textContent = 'Log in';
+      spinner.style.display = 'none';
     }
+  };
+
+  window.togglePw = function(id) {
+    const input = document.getElementById(id);
+    input.type = input.type === 'password' ? 'text' : 'password';
   };
 </script>
 </body>
